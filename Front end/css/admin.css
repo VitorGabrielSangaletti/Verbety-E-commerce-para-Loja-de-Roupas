@@ -1,0 +1,111 @@
+.admin-container {
+	width: 100%;
+	max-width: 1100px;
+	padding: 30px 20px;
+}
+
+#acessoNegado {
+	display: none;
+	color: #b00020;
+	font-size: 18px;
+	text-align: center;
+	margin-top: 40px;
+}
+
+.form-admin {
+	background: #fff;
+	border: 1px solid #e5ddd3;
+	padding: 25px;
+	max-width: 600px;
+	margin-bottom: 40px;
+}
+
+.form-admin label {
+	display: block;
+	font-size: 13px;
+	font-weight: 600;
+	color: #555;
+	margin: 12px 0 4px;
+}
+
+.form-admin input[type="text"],
+.form-admin input[type="number"],
+.form-admin select,
+.form-admin textarea {
+	width: 100%;
+	padding: 10px;
+	border: 1px solid #c9b8a8;
+	font-size: 14px;
+	box-sizing: border-box;
+}
+
+.checkbox-linha {
+	display: flex;
+	gap: 25px;
+	margin-top: 15px;
+}
+
+.checkbox-linha label {
+	font-weight: 400;
+	font-size: 14px;
+}
+
+.tamanhos-input {
+	display: flex;
+	gap: 10px;
+	flex-wrap: wrap;
+	margin-bottom: 15px;
+}
+
+.tamanhos-input label {
+	font-size: 13px;
+	text-align: center;
+}
+
+.tamanhos-input input {
+	width: 70px !important;
+	text-align: center;
+}
+
+.btn-cancelar {
+	display: none;
+	padding: 13px 20px;
+	border: 1px solid #999;
+	background: transparent;
+	cursor: pointer;
+	font-size: 14px;
+	margin-left: 10px;
+}
+
+/*------------------Tabela------------------*/
+
+.tabela-admin {
+	width: 100%;
+	border-collapse: collapse;
+	background: #fff;
+	font-size: 14px;
+}
+
+.tabela-admin th,
+.tabela-admin td {
+	border: 1px solid #e5ddd3;
+	padding: 10px;
+	text-align: left;
+	vertical-align: middle;
+}
+
+.tabela-admin th {
+	background: #f0ebe4;
+	font-weight: 600;
+}
+
+.mini-img {
+	width: 50px;
+	height: 60px;
+	object-fit: cover;
+	display: block;
+}
+
+.btn-excluir {
+	color: #b00020;
+}

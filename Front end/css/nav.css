@@ -1,0 +1,44 @@
+/*------------------Menu principal------------------*/
+
+.menu-principal {
+	display: flex;
+	gap: 30px;
+	align-items: center;
+	margin: 0 25px;
+}
+
+.menu-principal a {
+	color: #3d3d3d;
+	text-decoration: none;
+	font-family: Georgia, "Times New Roman", serif;
+	font-size: 16px;
+	letter-spacing: 1px;
+	padding-bottom: 3px;
+	border-bottom: 2px solid transparent;
+	transition: border-color 0.2s;
+}
+
+.menu-principal a:hover {
+	border-bottom-color: #3d3d3d;
+}
+
+.menu-principal a.ativo {
+	border-bottom-color: #8a7968;
+}
+
+/*------------------Botao voltar------------------*/
+
+.btn-voltar {
+	display: inline-block;
+	color: #6b6b6b;
+	text-decoration: none;
+	font-family: Georgia, "Times New Roman", serif;
+	font-size: 14px;
+	letter-spacing: 1px;
+	margin-bottom: 20px;
+	transition: color 0.2s;
+}
+
+.btn-voltar:hover {
+	color: #000;
+}

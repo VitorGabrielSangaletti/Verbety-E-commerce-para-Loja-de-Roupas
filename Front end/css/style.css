@@ -1,0 +1,395 @@
+.header {
+  flex-direction: row;
+  justify-content: center;
+  background-color: #ffffff;
+  color: #000000;
+  width: 100%;
+  display: flex;
+  padding: 5px 0;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid #ddd;
+  height: 0;
+}
+
+.logo {
+  height: 60px;
+  width: 165px;
+  opacity: 100;
+}
+
+.logo img {
+  align-self: flex-start;
+}
+
+.logo2 {
+  padding-right: 700px;
+}
+
+header h2 {
+  font-size: 30px;
+}
+
+.header2 {
+  background-color: #ffffff;
+  color: #000000;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 10px 10px;
+}
+
+nav ul li {
+  list-style: none;
+  display: inline-block;
+}
+
+a {
+  text-decoration: none;
+  color: #000000;
+  font-size: 18px;
+  padding: 20px;
+  align-items: center;
+  font-weight: bolder;
+  position: relative;
+  color: #000;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #000;
+}
+
+a::before {
+  content: "";
+  position: absolute;
+  display: contents;
+  width: 100%;
+  height: 2px;
+  bottom: 10px;
+  left: 0;
+  background-color: #000;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+a:hover::before {
+  transform: scaleX(1);
+}
+
+/*------------------------------------------------Carrossel-----------------------------------------------------*/
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #f5f5f5;
+  overflow: hidden;
+}
+
+.about-title {
+  font-size: 7.5rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  white-space: nowrap;
+  font-family: "Arial Black", "Arial Bold", Arial, sans-serif;
+  background: linear-gradient(to bottom, #d3af37 30%, rgba(0, 0, 0, 0) 76%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.carousel-container {
+  width: 100%;
+  max-width: 1200px;
+  height: 450px;
+  position: relative;
+  perspective: 1000px;
+  margin-top: 80px;
+}
+
+.carousel-track {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  width: 340px;
+  height: 420px;
+  background: white;
+  border-radius: 0%;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  cursor: pointer;
+}
+
+.card img {
+  width: 100%;
+  height: 72%;
+  object-fit: cover;
+  position: static;
+  overflow: scroll;
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.card.center {
+  z-index: 10;
+  transform: scale(1.1) translateZ(0);
+}
+
+.card.center img {
+  filter: none;
+}
+
+.card.left-2 {
+  z-index: 1;
+  transform: translateX(-400px) scale(0.8) translateZ(-300px);
+  opacity: 0.7;
+}
+
+.card.left-2 img {
+  filter: grayscale(100%);
+}
+
+.card.left-1 {
+  z-index: 5;
+  transform: translateX(-200px) scale(0.9) translateZ(-100px);
+  opacity: 0.9;
+}
+
+.card.left-1 img {
+  filter: grayscale(100%);
+}
+
+.card.right-1 {
+  z-index: 5;
+  transform: translateX(200px) scale(0.9) translateZ(-100px);
+  opacity: 0.9;
+}
+
+.card.right-1 img {
+  filter: grayscale(100%);
+}
+
+.card.right-2 {
+  z-index: 1;
+  transform: translateX(400px) scale(0.8) translateZ(-300px);
+  opacity: 0.7;
+}
+
+.card.right-2 img {
+  filter: grayscale(100%);
+}
+
+.card.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 60px;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(8, 42, 123, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dot.active {
+  background: rgb(8, 42, 123);
+  transform: scale(1.2);
+}
+
+.nav-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 20;
+  transition: all 0.3s ease;
+  font-size: 1.5rem;
+  border: none;
+  outline: none;
+  padding-bottom: 4px;
+}
+
+.nav-arrow.left {
+  left: 20px;
+  padding-right: 3px;
+}
+
+.nav-arrow.right {
+  right: 20px;
+  padding-left: 3px;
+}
+
+@media (max-width: 768px) {
+  .about-title {
+    font-size: 4.5rem;
+  }
+
+  .card {
+    width: 200px;
+    height: 280px;
+  }
+
+  .card.left-2 {
+    transform: translateX(-250px) scale(0.8) translateZ(-300px);
+  }
+
+  .card.left-1 {
+    transform: translateX(-120px) scale(0.9) translateZ(-100px);
+  }
+
+  .card.right-1 {
+    transform: translateX(120px) scale(0.9) translateZ(-100px);
+  }
+
+  .card.right-2 {
+    transform: translateX(250px) scale(0.8) translateZ(-300px);
+  }
+
+  .member-name {
+    font-size: 2rem;
+  }
+
+  .member-role {
+    font-size: 1.2rem;
+  }
+
+  .member-name::before,
+  .member-name::after {
+    width: 50px;
+  }
+
+  .member-name::before {
+    left: -70px;
+  }
+
+  .member-name::after {
+    right: -70px;
+  }
+}
+
+/*------------------------------------------------Preço-----------------------------------------------------*/
+
+.card-info {
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
+  background-color: #ebebeb;
+  height: 28%;
+}
+
+.product-title {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #222;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.product-price {
+  font-size: 0.9rem;
+  font-weight: 200;
+  color: #000;
+  margin-bottom: 2px;
+}
+
+.product-installments {
+  font-size: 0.72rem;
+  color: #666;
+  font-weight: 400;
+}
+
+/*------------------Botaos de criar e entra na conta------------------*/
+
+.header {
+  position: relative;
+}
+
+.auth-buttons {
+  position: absolute;
+  right: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  gap: 10px;
+}
+
+.btn-auth {
+  display: inline-block;
+  padding: 8px 22px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-auth.btn-black,
+.btn-auth.btn-outline {
+	background: #fff;
+	color: #000;
+	border: 1px solid #000;
+}
+
+.btn-auth.btn-black:hover,
+.btn-auth.btn-outline:hover {
+	background: #000;
+	color: #fff;
+}

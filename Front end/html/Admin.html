@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin | Verbety</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/catalogo.css">
+    <link rel="stylesheet" href="../css/nav.css">
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+    <header class="header">
+        <div class="logo2">
+            <img class="logo" src="../images/LogoFinal.png" alt="Logo Verbety">
+        </div>
+        <nav class="menu-principal">
+            <a href="Home.html">Início</a>
+            <a href="Catalogo.html">Catálogo</a>
+        </nav>
+        <div class="auth-buttons">
+            <a href="Login.html" class="btn-auth btn-black">Entrar</a>
+            <a href="Cadastro.html" class="btn-auth btn-outline">Criar conta</a>
+        </div>
+    </header>
+    <hr><hr><hr>
+
+    <main class="admin-container">
+        <p id="acessoNegado" class="mensagem erro">Acesso restrito a administradores.</p>
+
+        <div id="painelAdmin">
+            <h2 class="titulo-pagina">Painel do Administrador</h2>
+            <a href="Catalogo.html" class="btn-voltar">&larr; Ver catálogo</a>
+
+            <h3 id="formTitulo">Novo produto</h3>
+            <form id="formProduto" class="form-admin">
+                <label>Nome</label>
+                <input type="text" id="nome" required>
+
+                <label>Descrição</label>
+                <textarea id="descricao" rows="3"></textarea>
+
+                <label>Preço (ex: 99.90)</label>
+                <input type="number" id="preco" step="0.01" min="0" required>
+
+                <label>Imagem (nome do arquivo na pasta images/, ex: realShit.png)</label>
+                <input type="text" id="imagem" required>
+
+                <label>Categoria</label>
+                <select id="categoria" required></select>
+
+                <div class="checkbox-linha">
+                    <label><input type="checkbox" id="disponivel" checked> Disponível</label>
+                    <label><input type="checkbox" id="destaque"> Destaque </label>
+                </div>
+
+                <h4>Tamanhos e quantidades </h4>
+                <div class="tamanhos-input">
+                    <label>PP <input type="number" id="qtd_PP" min="0"></label>
+                    <label>P <input type="number" id="qtd_P" min="0"></label>
+                    <label>M <input type="number" id="qtd_M" min="0"></label>
+                    <label>G <input type="number" id="qtd_G" min="0"></label>
+                    <label>GG <input type="number" id="qtd_GG" min="0"></label>
+                </div>
+
+                <button type="submit" id="btnSalvar" class="btn-login">Adicionar produto</button>
+                <button type="button" id="btnCancelar" class="btn-cancelar">Cancelar edição</button>
+            </form>
+
+            <h3>Produtos cadastrados</h3>
+            <table class="tabela-admin">
+                <thead>
+                    <tr>
+                        <th>ID</th><th>Foto</th><th>Nome</th><th>Preço</th><th>Tamanhos</th><th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="listaProdutos"></tbody>
+            </table>
+        </div>
+    </main>
+
+    <script src="../js/auth.js"></script>
+    <script src="../js/admin.js"></script>
+</body>
+</html>

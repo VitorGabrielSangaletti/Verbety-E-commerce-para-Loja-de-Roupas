@@ -1,0 +1,47 @@
+# ==== Maven ====
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# ==== Compilados Java ====
+*.class
+
+# ==== Spring Boot ====
+# Configs com dados sensíveis (senha do banco, etc). Se usar variáveis de
+# ambiente, pode remover as duas linhas abaixo do ignore.
+application-local.properties
+application-local.yml
+
+# ==== IDEs ====
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+
+# Eclipse / STS
+.classpath
+.project
+.settings/
+.apt_generated
+.factorypath
+
+# VS Code
+.vscode/
+
+# ==== Sistema Operacional ====
+.DS_Store
+Thumbs.db
+
+# ==== Logs ====
+*.log
+logs/
+
+# ==== Front-end (HTML/CSS/JS) ====
+# Descomente se usar Node em algum momento (ex: para build/minificação)
+# node_modules/
+# npm-debug.log
+
+# ==== Outros ====
+*.bak
+*.tmp
