@@ -42,7 +42,7 @@ public class SecurityConfig {
 
 						// Parte que o usuario tem que logar
 						.requestMatchers("/api/pedidos/**").authenticated().requestMatchers("/api/itens-pedido/**")
-						.authenticated()
+						.authenticated().requestMatchers("/api/carrinho/**").authenticated()
 
 						// Parte que so funcionario pode mexer (admin)
 						.requestMatchers(HttpMethod.POST, "/api/categorias/**").hasRole("ADMIN")

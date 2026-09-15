@@ -10,7 +10,6 @@
 .menu-principal a {
 	color: #3d3d3d;
 	text-decoration: none;
-	font-family: Georgia, "Times New Roman", serif;
 	font-size: 16px;
 	letter-spacing: 1px;
 	padding-bottom: 3px;
@@ -32,7 +31,6 @@
 	display: inline-block;
 	color: #6b6b6b;
 	text-decoration: none;
-	font-family: Georgia, "Times New Roman", serif;
 	font-size: 14px;
 	letter-spacing: 1px;
 	margin-bottom: 20px;
@@ -41,4 +39,26 @@
 
 .btn-voltar:hover {
 	color: #000;
+}
+
+/*------------------icone do carrinho---------------------*/
+
+.carrinho-link {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	margin-left: 20p;
+}
+
+.carrinho-badge {
+	position: absolute;
+	top: -8px;
+	right: -12px;
+	background-color: #000;
+	color: #fff;
+	font-size: 11px;
+	padding: 2px 6px;
+	border-radius: 50%;
+	min-width: 17px;
+	text-align: center;
 }

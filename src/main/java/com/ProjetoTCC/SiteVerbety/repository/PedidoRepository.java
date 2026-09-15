@@ -1,10 +1,12 @@
 package com.ProjetoTCC.SiteVerbety.repository;
 
-import com.ProjetoTCC.SiteVerbety.model.Pedido;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import com.ProjetoTCC.SiteVerbety.model.Pedido;
 
 @Repository
 public interface PedidoRepository extends JpaRepository<Pedido, Long> {
@@ -14,4 +16,7 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
 
     // Busca pedido por status
     List<Pedido> findByStatus(String status);
+    
+    //Busca o carrinho aberto de um usuario
+    Optional<Pedido> findByUsuarioIdUsuarioAndStatus(Long idUsuario, String status);
 }

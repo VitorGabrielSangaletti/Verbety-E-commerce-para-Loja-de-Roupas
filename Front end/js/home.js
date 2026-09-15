@@ -1,12 +1,12 @@
 //lista que vai mostrar os texto embaixo do carrossel
 
 window.teamMembers = [
-    { name: "VERBETY", role: "" },
-    { name: "VERBETY", role: "" },
-    { name: "VERBETY", role: "" },
-    { name: "VERBETY", role: "" },
-    { name: "VERBETY", role: "" },
-    { name: "VERBETY", role: "" }
+    { name: "", role: "" },
+    { name: "", role: "" },
+    { name: "", role: "" },
+    { name: "", role: "" },
+    { name: "", role: "" },
+    { name: "", role: "" }
 ];
 
 //preenche o carrossel com os produtos em destaque do banco

@@ -9,7 +9,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        String caminhoFront = "file:C:/Users/Vitinho/Desktop/OpenCode/Tcc/Front end/trabalho/";
+        String caminhoFront = "file:C:/Users/Vitinho/Desktop/OpenCode/Tcc/Front end/";
         registry.addResourceHandler("/site/**").addResourceLocations(caminhoFront);
     }
 }

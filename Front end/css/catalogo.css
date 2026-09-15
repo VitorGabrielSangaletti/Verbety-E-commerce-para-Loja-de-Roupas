@@ -1,9 +1,5 @@
-
 body {
 	overflow: auto;
-	align-items: center;
-	justify-content: flex-start;
-	background-color: #faf8f5;
 }
 
 /*------------------Catalogo------------------*/
@@ -16,12 +12,7 @@ body {
 
 .titulo-pagina {
 	text-align: left;
-	font-family: Georgia, "Times New Roman", serif;
-	font-weight: 400;
 	font-size: 32px;
-	letter-spacing: 4px;
-	text-transform: uppercase;
-	color: #3d3d3d;
 	margin-bottom: 35px;
 }
 
@@ -35,11 +26,10 @@ body {
 .filtros input,
 .filtros select {
 	padding: 10px 14px;
-	border: none;
-	border-bottom: 1px solid #c9b8a8;
-	background: transparent;
+	border: 1px solid #ccc;
+	background: #fff;
 	font-size: 14px;
-	color: #555;
+	color: #000;
 	outline: none;
 }
 
@@ -70,17 +60,13 @@ body {
 }
 
 .card-produto h3 {
-	font-family: Georgia, "Times New Roman", serif;
-	font-weight: 400;
 	font-size: 15px;
 	padding: 12px 5px 2px;
-	color: #3d3d3d;
 }
 
 .card-produto .preco {
 	padding: 0 5px 12px;
 	font-size: 14px;
-	color: #7a6a58;
 }
 
 .badge-esgotado {
@@ -103,6 +89,7 @@ body {
 	max-width: 1000px;
 	padding: 40px 20px;
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
 }
 
@@ -124,28 +111,22 @@ body {
 }
 
 .info-produto h2 {
-	font-family: Georgia, "Times New Roman", serif;
-	font-weight: 400;
 	font-size: 28px;
-	color: #3d3d3d;
 	margin-bottom: 10px;
 }
 
 .info-produto .preco {
 	font-size: 20px;
-	color: #7a6a58;
 	margin-bottom: 16px;
 }
 
 .info-produto p {
-	color: #555;
 	line-height: 1.6;
 	margin-bottom: 20px;
 }
 
 .info-produto h4 {
 	font-weight: 600;
-	color: #3d3d3d;
 	margin-bottom: 10px;
 }
 
@@ -159,22 +140,21 @@ body {
 .btn-tamanho {
 	min-width: 50px;
 	padding: 10px 14px;
-	border: 1px solid #c9b8a8;
+	border: 1px solid #000;
 	background: transparent;
 	cursor: pointer;
 	font-size: 14px;
-	color: #3d3d3d;
 	transition: all 0.2s;
 }
 
 .btn-tamanho:hover {
-	border-color: #000;
+	background: #000;
+	color: #fff;
 }
 
 .btn-tamanho.selecionado {
-	background: #3d3d3d;
+	background: #000;
 	color: #fff;
-	border-color: #3d3d3d;
 }
 
 .btn-tamanho.desabilitado {
@@ -185,8 +165,6 @@ body {
 
 #btnCarrinho {
 	max-width: 320px;
-	letter-spacing: 2px;
-	text-transform: uppercase;
 }
 
 #btnCarrinho:disabled {
@@ -213,4 +191,72 @@ body {
 	justify-content: center;
 	margin-top: 8px;
 	padding-bottom: 10px;
+}
+
+/*------------------Carrinho------------------*/
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border-bottom: 1px solid #ddd;
+  padding: 15px 0;
+}
+
+.cart-item-img {
+  width: 70px;
+  height: 90px;
+  object-fit: cover;
+}
+
+.cart-item-info {
+  flex: 1;
+}
+
+.cart-item-info h3 {
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+.cart-item-info p {
+  font-size: 13px;
+  color: #555;
+}
+
+.cart-qtd {
+  width: 60px;
+  padding: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.cart-subtotal {
+  font-weight: 600;
+  min-width: 90px;
+  text-align: right;
+}
+
+.cart-remover {
+  background: transparent;
+  border: 1px solid #000;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.cart-remover:hover {
+  background: #000;
+  color: #fff;
+}
+
+.cart-resumo {
+  margin-top: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.cart-resumo p {
+  font-size: 20px;
 }

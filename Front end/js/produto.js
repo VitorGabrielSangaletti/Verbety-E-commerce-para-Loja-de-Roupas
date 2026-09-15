@@ -6,6 +6,14 @@ let tamanhoSelecionado = null;
 const parametros = new URLSearchParams(window.location.search);
 const idProduto = parametros.get("id");
 
+// verifica se o usuario esta logado (usuario comum, nao admin)
+async function usuarioLogado() {
+    const resposta = await fetch(API + "/api/auth/me", { credentials: "include" });
+    if (!resposta.ok) return false;
+    const dados = await resposta.json();
+    return dados.tipo === "USUARIO";
+}
+
 async function carregarProduto() {
     const mensagem = document.getElementById("mensagem");
     const conteudo = document.getElementById("conteudoProduto");
@@ -62,19 +70,42 @@ async function carregarProduto() {
             });
         });
 
-        // por enquanto so mostra no console porque nao fiz o carrinho ainda
-        document.getElementById("btnCarrinho").addEventListener("click", () => {
+        document.getElementById("btnCarrinho").addEventListener("click", async () => {
             if (!tamanhoSelecionado) {
                 alert("Escolha um tamanho");
                 return;
             }
-            console.log("Adicionar ao carrinho:", {
-                idProduto: produto.idProduto,
-                nome: produto.nome,
-                tamanho: tamanhoSelecionado,
-                preco: produto.preco
+
+            // visitante nao pode comprar: manda pro login
+            if (!(await usuarioLogado())) {
+                window.location.href = "Login.html";
+                return;
+            }
+
+            const resposta = await fetch(API + "/api/carrinho/itens", {
+                method: "POST",
+                credentials: "include",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    idProduto: produto.idProduto,
+                    tamanho: tamanhoSelecionado,
+                    quantidade: 1
+                })
             });
-            alert("Adicionado ao carrinho");
+
+            const dados = await resposta.json();
+
+            if (resposta.status === 401) {
+                window.location.href = "Login.html";
+                return;
+            }
+
+            if (!resposta.ok) {
+                alert(dados.erro || "Não foi possível adicionar. Verifique o estoque.");
+                return;
+            }
+
+            alert("Adicionado ao carrinho!");
         });
 
     } catch (erro) {

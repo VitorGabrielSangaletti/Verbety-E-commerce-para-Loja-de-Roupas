@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Carrinho</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/catalogo.css" />
+    <link rel="stylesheet" href="../css/nav.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="logo2">
+        <img class="logo" src="../images/LogoFinal.png" alt="Logo Verbety" />
+      </div>
+      <nav class="menu-principal">
+        <a href="Home.html">Início</a>
+        <a href="Catalogo.html">Catálogo</a>
+      </nav>
+      <div class="auth-buttons">
+        <a href="Login.html" class="btn-auth btn-black">Entrar</a>
+        <a href="Cadastro.html" class="btn-auth btn-outline">Criar conta</a>
+      </div>
+    </header>
+    
+
+    <main class="catalogo-container">
+      <h2 class="titulo-pagina">Carrinho</h2>
+      <a href="Catalogo.html" class="btn-voltar">Voltar ao catálogo</a>
+      <p id="mensagem" class="mensagem"></p>
+
+      <div id="itensCarrinho"></div>
+      <div id="resumo"></div>
+    </main>
+
+    <script src="../js/auth.js"></script>
+    <script src="../js/carrinho.js"></script>
+  </body>
+</html>
