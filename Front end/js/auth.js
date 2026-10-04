@@ -14,27 +14,31 @@ fetch("http://localhost:8080/api/auth/me", {
     if (!dados || !dados.tipo) return;
 
     console.log("[auth] logado como:", dados.tipo);
-    const authButtons = document.querySelector(".auth-buttons");
+    const linkConta = document.getElementById("linkConta");
+    const iconeConta = document.getElementById("iconeConta");
 
-    const linkAdmin = dados.tipo === "ADMIN"
-        ? '<a href="Admin.html" class="btn-auth btn-outline">Admin</a>'
-        : "";
+    if (linkConta && iconeConta) {
+        linkConta.href = "#";
+        linkConta.setAttribute("aria-label", "Sair");
+        iconeConta.classList.remove("bi-person");
+        iconeConta.classList.add("bi-box-arrow-right");
 
-    authButtons.innerHTML = `
-        ${linkAdmin}
-        <a href="#" id="btnSair" class="btn-auth btn-black">Sair</a>
-    `;
-
-    document.getElementById("btnSair").addEventListener("click", (event) => {
-        event.preventDefault();
-        fetch("http://localhost:8080/api/auth/logout", {
-            method: "POST",
-            credentials: "include"
-        }).then(() => {
-            window.location.href = "Home.html";
+        linkConta.addEventListener("click", (event) => {
+            event.preventDefault();
+            fetch("http://localhost:8080/api/auth/logout", {
+                method: "POST",
+                credentials: "include"
+            }).then(() => {
+                window.location.href = "Home.html";
+            });
         });
-    });
-})
-.catch(erro => {
-    console.log("[auth] falha na conexao:", erro.message);
+    }
+
+    const itemAdmin = dados.tipo === "ADMIN"
+        ? '<li><a class="lv" href="Admin.html">Admin</a></li>'
+        : "";
+    const lista = document.querySelector("nav ul");
+    if (itemAdmin && lista) {
+        lista.insertAdjacentHTML("beforeend", itemAdmin);
+    }
 });

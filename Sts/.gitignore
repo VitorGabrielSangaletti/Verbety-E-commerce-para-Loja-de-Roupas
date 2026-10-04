@@ -31,14 +31,3 @@ build/
 
 ### VS Code ###
 .vscode/
-
-### Sistema ###
-Thumbs.db
-ehthumbs.db
-Desktop.ini
-
-### Logs e temporarios ###
-*.log
-*.tmp
-*.bak
-~$*

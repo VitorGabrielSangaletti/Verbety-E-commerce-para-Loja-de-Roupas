@@ -23,14 +23,15 @@ body {
 	margin-bottom: 40px;
 }
 
-.filtros input,
-.filtros select {
+.filtros input {
 	padding: 10px 14px;
 	border: 1px solid #ccc;
 	background: #fff;
 	font-size: 14px;
 	color: #000;
 	outline: none;
+	width: 100%;
+	max-width: 340px;
 }
 
 .grid-produtos {
@@ -81,6 +82,8 @@ body {
 	text-transform: uppercase;
 	z-index: 2;
 }
+
+
 
 /*------------------Pagina do produto------------------*/
 
@@ -172,26 +175,6 @@ body {
 	cursor: not-allowed;
 }
 
-.header {
-	justify-content: space-between;
-	align-items: center;
-	flex-wrap: wrap;
-	padding: 5px 40px;
-	width: 100%;
-}
-
-.logo2 {
-	padding-right: 0;
-}
-
-/* menu numa segunda linha, abaixo da logo */
-.menu-principal {
-	width: 100%;
-	order: 3;
-	justify-content: center;
-	margin-top: 8px;
-	padding-bottom: 10px;
-}
 
 /*------------------Carrinho------------------*/
 

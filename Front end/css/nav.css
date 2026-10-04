@@ -1,3 +1,120 @@
+/*------------------Submenu de categorias (abre no hover)------------------*/
+
+.nav-cat {
+	position: relative;
+}
+
+.nav-cat > .lv {
+	display: inline-flex;
+	align-items: center;
+	gap: 7px;
+}
+
+.nav-cat > .lv::after {
+	content: "";
+	display: inline-block;
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-top: 6px solid currentColor;
+	transition: transform 0.25s ease;
+}
+
+.nav-cat:hover > .lv::after {
+	transform: rotate(180deg);
+}
+
+.nav-cat::before {
+	content: "";
+	position: absolute;
+	left: 12px;
+	right: 12px;
+	bottom: 1px;
+	height: 2px;
+	background: #000;
+	transform: scaleX(0);
+	transform-origin: left center;
+	transition: transform 0.25s ease;
+}
+
+.nav-cat:hover::before {
+	transform: scaleX(1);
+}
+
+.submenu {
+	position: absolute;
+	top: calc(100% - 8px);
+	left: 0;
+	min-width: 235px;
+	margin: 0;
+	padding: 14px 0 8px;
+	background: #fff;
+	border: 1px solid #e2e2e2;
+	border-radius: 0 0 8px 8px;
+	box-shadow: 0 14px 30px rgba(0, 0, 0, 0.14);
+	opacity: 0;
+	visibility: hidden;
+	transform: translateY(-12px);
+	transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s;
+	z-index: 40;
+}
+
+.nav-cat:hover .submenu,
+.nav-cat:focus-within .submenu {
+	opacity: 1;
+	visibility: visible;
+	transform: translateY(0);
+}
+
+.submenu li {
+	display: block;
+	position: static;
+	margin: 0;
+	padding: 0;
+	opacity: 0;
+	transform: translateX(-10px);
+	transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.nav-cat:hover .submenu li,
+.nav-cat:focus-within .submenu li {
+	opacity: 1;
+	transform: translateX(0);
+}
+
+.nav-cat:hover .submenu li:nth-child(1) { transition-delay: 0.05s; }
+.nav-cat:hover .submenu li:nth-child(2) { transition-delay: 0.09s; }
+.nav-cat:hover .submenu li:nth-child(3) { transition-delay: 0.13s; }
+.nav-cat:hover .submenu li:nth-child(4) { transition-delay: 0.17s; }
+.nav-cat:hover .submenu li:nth-child(5) { transition-delay: 0.21s; }
+
+.submenu a {
+	display: block;
+	padding: 11px 18px;
+	font-size: 16px;
+	font-weight: 400;
+	color: #333;
+	text-decoration: none;
+	white-space: nowrap;
+	border-left: 3px solid transparent;
+	transition: background 0.18s ease, padding-left 0.18s ease, color 0.18s ease;
+}
+
+.submenu a:hover {
+	background: #000;
+	color: #fff;
+	padding-left: 28px;
+}
+
+.submenu a.ativo {
+	font-weight: 700;
+	color: #000;
+	border-left-color: #000;
+}
+
+.submenu a.ativo:hover {
+	color: #fff;
+}
+
 /*------------------Menu principal------------------*/
 
 .menu-principal {

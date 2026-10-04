@@ -18,8 +18,10 @@ body {
   width: 100%;
   display: flex;
   justify-content: center;
-  background-color: #ffffff;
-  padding: 5px 0;
+  align-items: center;
+  background: transparent;
+  padding: 24px 0;
+  min-height: 0;
 }
 
 .logo {

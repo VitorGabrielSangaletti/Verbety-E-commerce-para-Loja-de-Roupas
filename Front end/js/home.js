@@ -1,51 +1,46 @@
-//lista que vai mostrar os texto embaixo do carrossel
+// preenche a secao DESTAQUES com os produtos em destaque do banco
 
-window.teamMembers = [
-    { name: "", role: "" },
-    { name: "", role: "" },
-    { name: "", role: "" },
-    { name: "", role: "" },
-    { name: "", role: "" },
-    { name: "", role: "" }
-];
-
-//preenche o carrossel com os produtos em destaque do banco
 const API_HOME = "http://localhost:8080";
 
-fetch(API_HOME + "/api/produtos/destaques")
-.then(resposta => resposta.json())
-.then(produtos => {
-    if (!produtos.length) return;
+function formatarPreco(valor) {
+  return Number(valor).toFixed(2).replace(".", ",");
+}
 
-    const cards = document.querySelectorAll(".carousel-track .card");
+function renderizarDestaques(produtos) {
+  const container = document.getElementById("listaDestaques");
+  if (!container) return;
 
-    cards.forEach((card, i) => {
-        //se tiver menos de 6 destaques repete a partir do inicio
-        const p = produtos[i % produtos.length];
+  container.innerHTML = "";
 
-        const img = card.querySelector(".card-img img");
-        const titulo = card.querySelector(".product-title");
-        const preco = card.querySelector(".product-price");
-        const parcelas = card.querySelector(".product-installments");
+  if (!Array.isArray(produtos) || produtos.length === 0) {
+    container.innerHTML = '<p class="mensagem">Nenhum destaque disponible.</p>';
+    return;
+  }
 
-        img.onerror = () => { img.src = "../images/guest.png"; };
-        img.src = "../images/" + p.imagem;
-        img.alt = p.nome;
+  produtos.forEach((produto) => {
+    const card = document.createElement("div");
+    card.className = "card3";
 
-        titulo.textContent = p.nome;
+    card.innerHTML = `
+      <img src="../images/${produto.imagem}" alt="${produto.nome}" onerror="this.src='../images/guest.png'">
+      <div class="card3-info">
+        <p class="card3-nome">${produto.nome}</p>
+        <p class="card3-preco">R$ ${formatarPreco(produto.preco)}</p>
+        <p class="card3-parcelas">ou 12x de R$ ${formatarPreco(produto.preco / 12)}</p>
+      </div>
+    `;
 
-        const precoFmt = Number(p.preco).toFixed(2).replace(".", ",");
-        preco.textContent = "R$ " + precoFmt;
-        parcelas.textContent = "ou 12x de R$ " + (Number(p.preco) / 12).toFixed(2).replace(".", ",");
-
-        //quando clicar no card do centro vai pra pagina do produto
-        card.onclick = () => {
-            if (card.classList.contains("center")) {
-                window.location.href = "Produto.html?id=" + p.idProduto;
-            }
-        };
+    card.addEventListener("click", () => {
+      window.location.href = "Produto.html?id=" + produto.idProduto;
     });
-})
-.catch(erro => {
+
+    container.appendChild(card);
+  });
+}
+
+fetch(API_HOME + "/api/produtos/destaques")
+  .then((resposta) => resposta.json())
+  .then(renderizarDestaques)
+  .catch((erro) => {
     console.log("[home] falha ao buscar destaques:", erro.message);
-});
+  });

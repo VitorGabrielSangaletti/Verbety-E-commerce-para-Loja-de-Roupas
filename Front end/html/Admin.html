@@ -8,22 +8,30 @@
     <link rel="stylesheet" href="../css/catalogo.css">
     <link rel="stylesheet" href="../css/nav.css">
     <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
 </head>
 <body>
     <header class="header">
-        <div class="logo2">
-            <img class="logo" src="../images/LogoFinal.png" alt="Logo Verbety">
-        </div>
-        <nav class="menu-principal">
-            <a href="Home.html">Início</a>
-            <a href="Catalogo.html">Catálogo</a>
+        <a href="Home.html" class="logo">Verbety</a>
+
+        <nav>
+            <ul>
+                <li><a class="lv" href="Catalogo.html">Catálogo</a></li>
+                <li><a class="lv" href="#">Destaque</a></li>
+            </ul>
         </nav>
-        <div class="auth-buttons">
-            <a href="Login.html" class="btn-auth btn-black">Entrar</a>
-            <a href="Cadastro.html" class="btn-auth btn-outline">Criar conta</a>
+
+        <div class="icones">
+            <a href="#" aria-label="Buscar"><i class="bi bi-search"></i></a>
+            <a href="#" aria-label="Lojas"><i class="bi bi-shop"></i></a>
+            <a href="#" aria-label="Favoritos"><i class="bi bi-heart"></i></a>
+            <a href="Login.html" aria-label="Entrar" id="linkConta"><i class="bi bi-person" id="iconeConta"></i></a>
+            <a href="Carrinho.html" aria-label="Carrinho"><i class="bi bi-bag"></i></a>
         </div>
     </header>
-    <hr><hr><hr>
 
     <main class="admin-container">
         <p id="acessoNegado" class="mensagem erro">Acesso restrito a administradores.</p>
@@ -79,7 +87,8 @@
         </div>
     </main>
 
-    <script src="../js/auth.js"></script>
-    <script src="../js/admin.js"></script>
+<script src="../js/nav-categorias.js"></script>
+<script src="../js/auth.js"></script>
+<script src="../js/admin.js"></script>
 </body>
 </html>

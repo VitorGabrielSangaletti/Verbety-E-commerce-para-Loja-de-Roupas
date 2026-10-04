@@ -1,73 +1,94 @@
-const slides = document.querySelectorAll(".slides img");
+const track = document.querySelector(".track");
+const slides = document.querySelectorAll(".track .slide");
+const total = slides.length;
 
-let slideIndex = 0;
-
+let slideIndex = 1;       
 let intervalId = null;
-
-
+let isMoving = false;    
 
 document.addEventListener("DOMContentLoaded", initializeSlider);
 
+function initializeSlider() {
+  if (total === 0) return;
 
 
-function initializeSlider(){
+  const firstClone = slides[0].cloneNode(true);
+  const lastClone = slides[total - 1].cloneNode(true);
+  track.appendChild(firstClone);
+  track.insertBefore(lastClone, track.firstChild);
 
-    if(slides.length > 0){
+  jumpTo(slideIndex);     
+  track.addEventListener("transitionend", handleTransitionEnd);
+  startAutoPlay();
+}
 
-        slides[slideIndex].classList.add("displaySlide");
+function startAutoPlay() {
+  clearInterval(intervalId);
+  intervalId = setInterval(nextSlide, 5000);
+}
 
-        intervalId = setInterval(nextSlide, 5000);
-
-    }
-
+function moveTo(index) {
+  track.style.transform = `translateX(-${index * 100}%)`;
 }
 
 
+function jumpTo(index) {
+  track.style.transition = "none";
+  moveTo(index);
+  track.offsetWidth;                 
+  track.style.transition = "";       
+}
 
-function showSlide(index){
+function nextSlide() {
+  if (isMoving) return;
+  isMoving = true;
+  slideIndex++;
+  moveTo(slideIndex);
+}
 
-    if(index >= slides.length){
-
-        slideIndex = 0;
-
-    }
-
-    else if(index < 0){
-
-        slideIndex = slides.length - 1;
-
-    }
-
-
-
-    slides.forEach(slide => {
-
-        slide.classList.remove("displaySlide");
-
-    });
-
-    slides[slideIndex].classList.add("displaySlide");
-
+function prevSlide() {
+  if (isMoving) return;
+  isMoving = true;
+  slideIndex--;
+  moveTo(slideIndex);
 }
 
 
+function handleTransitionEnd(e) {
+  if (e.target !== track) return;
 
-function prevSlide(){
+  if (slideIndex === total + 1) {    
+    slideIndex = 1;
+    jumpTo(slideIndex);              
+  }
+  else if (slideIndex === 0) {       
+    slideIndex = total;
+    jumpTo(slideIndex);
+  }
 
-    clearInterval(intervalId);
-
-    slideIndex--;
-
-    showSlide(slideIndex);
-
+  isMoving = false;
+}
+function stopAutoPlay() {
+  clearInterval(intervalId);
+  intervalId = null;
 }
 
+function clickNext() {
+  stopAutoPlay();     
+  nextSlide();
+}
 
+function clickPrev() {
+  stopAutoPlay();
+  prevSlide();
+}
 
-function nextSlide(){
+function clickNext() {
+  startAutoPlay();    
+  nextSlide();
+}
 
-    slideIndex++;
-
-    showSlide(slideIndex);
-
+function clickPrev() {
+  startAutoPlay();
+  prevSlide();
 }
