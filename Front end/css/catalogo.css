@@ -232,6 +232,35 @@ body {
   color: #fff;
 }
 
+/* bolinha que marca quais produtos entram na compra */
+.cart-selecao {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid #000;
+  appearance: none;
+  -webkit-appearance: none;
+  background: #fff;
+  cursor: pointer;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.cart-selecao:checked {
+  background: #000;
+}
+
+.cart-selecao:checked::after {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #fff;
+}
+
 .cart-resumo {
   margin-top: 25px;
   display: flex;
@@ -242,4 +271,42 @@ body {
 
 .cart-resumo p {
   font-size: 20px;
+}
+
+/*------------------Pagina do produto: botoes de compra------------------*/
+
+.acoes-produto {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.btn-adicionar,
+.btn-comprar {
+  flex: 1;
+  min-width: 200px;
+  padding: 13px 20px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: center;
+  border-radius: 8px;
+  font-family: inherit;
+  background: #fff;
+  color: #000;
+  border: 1px solid #000;
+  transition: background 0.2s, color 0.2s;
+}
+
+.btn-adicionar:hover,
+.btn-comprar:hover {
+  background: #000;
+  color: #fff;
+}
+
+.btn-adicionar:disabled,
+.btn-comprar:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }

@@ -14,6 +14,35 @@ async function usuarioLogado() {
     return dados.tipo === "USUARIO";
 }
 
+// adiciona 1 unidade do produto/tamanho no carrinho.
+// retorna os dados do carrinho atualizado ou null se deu errado.
+async function adicionarProduto(produto) {
+    const resposta = await fetch(API + "/api/carrinho/itens", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            idProduto: produto.idProduto,
+            tamanho: tamanhoSelecionado,
+            quantidade: 1
+        })
+    });
+
+    if (resposta.status === 401) {
+        window.location.href = "Login.html";
+        return null;
+    }
+
+    const dados = await resposta.json();
+
+    if (!resposta.ok) {
+        alert(dados.erro || "Não foi possível adicionar. Verifique o estoque.");
+        return null;
+    }
+
+    return dados;
+}
+
 async function carregarProduto() {
     const mensagem = document.getElementById("mensagem");
     const conteudo = document.getElementById("conteudoProduto");
@@ -55,9 +84,14 @@ async function carregarProduto() {
                 <h4>Tamanhos:</h4>
                 <div class="tamanhos">${botoesTamanho || "<span>Nenhum tamanho cadastrado.</span>"}</div>
 
-                <button id="btnCarrinho" class="btn-login" ${esgotado ? "disabled" : ""}>
-                    ${esgotado ? "Esgotado" : "Adicionar ao Carrinho"}
-                </button>
+                <div class="acoes-produto">
+                    <button id="btnCarrinho" class="btn-adicionar" ${esgotado ? "disabled" : ""}>
+                        ${esgotado ? "Esgotado" : "Adicionar ao Carrinho"}
+                    </button>
+                    <button id="btnComprar" class="btn-comprar" ${esgotado ? "disabled" : ""}>
+                        Comprar agora
+                    </button>
+                </div>
             </div>
         `;
 
@@ -70,6 +104,7 @@ async function carregarProduto() {
             });
         });
 
+        // "Adicionar ao Carrinho": adiciona e continua na pagina
         document.getElementById("btnCarrinho").addEventListener("click", async () => {
             if (!tamanhoSelecionado) {
                 alert("Escolha um tamanho");
@@ -82,30 +117,28 @@ async function carregarProduto() {
                 return;
             }
 
-            const resposta = await fetch(API + "/api/carrinho/itens", {
-                method: "POST",
-                credentials: "include",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    idProduto: produto.idProduto,
-                    tamanho: tamanhoSelecionado,
-                    quantidade: 1
-                })
-            });
+            const resultado = await adicionarProduto(produto);
+            if (resultado) alert("Adicionado ao carrinho!");
+        });
 
-            const dados = await resposta.json();
+        // "Comprar agora": adiciona e abre o checkout direto,
+        // mostrando so esse produto (e as opcoes de compra)
+        document.getElementById("btnComprar").addEventListener("click", async () => {
+            if (!tamanhoSelecionado) {
+                alert("Escolha um tamanho");
+                return;
+            }
 
-            if (resposta.status === 401) {
+            if (!(await usuarioLogado())) {
                 window.location.href = "Login.html";
                 return;
             }
 
-            if (!resposta.ok) {
-                alert(dados.erro || "Não foi possível adicionar. Verifique o estoque.");
-                return;
+            const resultado = await adicionarProduto(produto);
+            if (resultado) {
+                window.location.href = "Checkout.html?produto=" + produto.idProduto +
+                    "&tamanho=" + encodeURIComponent(tamanhoSelecionado);
             }
-
-            alert("Adicionado ao carrinho!");
         });
 
     } catch (erro) {

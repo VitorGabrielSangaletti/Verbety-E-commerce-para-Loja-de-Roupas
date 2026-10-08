@@ -140,12 +140,20 @@ public class CarrinhoService {
     }
 
     // finaliza a compra, confere o estoque de novo, debita e fecha o pedido
-    public Pedido finalizar(Usuario usuario, String formaPagamento, String observacao) {
+    // idsSelecionados (opcional): compra so esses itens; se for null compra o carrinho todo
+    public Pedido finalizar(Usuario usuario, String formaPagamento, String observacao, List<Long> idsSelecionados) {
         Pedido carrinho = buscarOuCriarCarrinho(usuario);
         List<ItemPedido> itens = itensDoPedido(carrinho.getIdPedido());
 
+        // se vieram ids marcados, compra somente esses
+        if (idsSelecionados != null && !idsSelecionados.isEmpty()) {
+            itens = itens.stream()
+                    .filter(item -> idsSelecionados.contains(item.getIdItemPedido()))
+                    .toList();
+        }
+
         if (itens.isEmpty()) {
-            throw new RuntimeException("Carrinho vazio");
+            throw new RuntimeException("Selecione pelo menos um produto para comprar");
         }
 
         // confere o estoque antes de debitar
@@ -174,10 +182,37 @@ public class CarrinhoService {
             produtoRepository.save(item.getProduto());
         }
 
-        carrinho.setStatus("RECEBIDO");
-        carrinho.setFormaPagamento(formaPagamento);
-        carrinho.setObservacao(observacao);
-        return pedidoRepository.save(carrinho);
+        boolean comprouTudo = itens.size() == itensDoPedido(carrinho.getIdPedido()).size();
+        Pedido pedidoFinal;
+
+        if (comprouTudo) {
+            // comprou tudo: fecha o proprio carrinho
+            carrinho.setStatus("RECEBIDO");
+            carrinho.setFormaPagamento(formaPagamento);
+            carrinho.setObservacao(observacao);
+            pedidoFinal = pedidoRepository.save(carrinho);
+        } else {
+            // compra parcial: cria um pedido novo e move so os itens comprados pra ele
+            Pedido novo = new Pedido();
+            novo.setUsuario(usuario);
+            novo.setDataPedido(LocalDateTime.now());
+            novo.setStatus("RECEBIDO");
+            novo.setFormaPagamento(formaPagamento);
+            novo.setObservacao(observacao);
+            novo.setValorTotal(BigDecimal.ZERO);
+            novo = pedidoRepository.save(novo);
+
+            for (ItemPedido item : itens) {
+                item.setPedido(novo);
+                itemPedidoRepository.save(item);
+            }
+
+            recalcularTotal(novo.getIdPedido());
+            recalcularTotal(carrinho.getIdPedido());
+            pedidoFinal = novo;
+        }
+
+        return pedidoFinal;
     }
 
     private void recalcularTotal(Long idPedido) {

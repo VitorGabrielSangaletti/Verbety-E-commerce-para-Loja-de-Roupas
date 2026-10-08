@@ -1,0 +1,200 @@
+/*------------------Checkout------------------*/
+
+.checkout-container {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.mensagem {
+  text-align: center;
+  font-size: 14px;
+  margin-bottom: 12px;
+  min-height: 18px;
+}
+
+.btn-voltar {
+  display: inline-block;
+  align-self: flex-start;
+  margin-bottom: 18px;
+  color: #000;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  text-decoration: none;
+  border: 1px solid #000;
+  background: #fff;
+  padding: 9px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.btn-voltar:hover {
+  background: #000;
+  color: #fff;
+}
+
+/* itens do pedido reutilizam .cart-item do catalogo.css */
+.checkout-itens {
+  border-top: 1px solid #ddd;
+  margin-top: 10px;
+}
+
+/*------------------Resumo / pagamento------------------*/
+
+.checkout-resumo {
+  margin-top: 30px;
+  background: #faf7f2;
+  border: 1px solid #e5ddd3;
+  padding: 25px;
+}
+
+.checkout-resumo h3 {
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.checkout-resumo label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #555;
+  margin: 14px 0 6px;
+}
+
+.checkout-resumo select,
+.checkout-resumo textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #c9b8a8;
+  background: #fff;
+  font-size: 14px;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.checkout-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 2px solid #111;
+  margin-top: 18px;
+  padding-top: 14px;
+}
+
+.checkout-total p {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.checkout-total strong {
+  font-size: 24px;
+}
+
+/*------------------Botoes------------------*/
+
+.btn-confirmar,
+.btn-secundario {
+  display: inline-block;
+  padding: 13px 22px;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  text-align: center;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: opacity 0.2s, background 0.2s, color 0.2s;
+}
+
+.btn-confirmar {
+  background: #000;
+  color: #fff;
+  border: 1px solid #000;
+  width: 100%;
+  margin-top: 18px;
+}
+
+.btn-confirmar:hover {
+  opacity: 0.85;
+}
+
+.botao-livre {
+  width: auto;
+}
+
+.btn-secundario {
+  background: #fff;
+  color: #000;
+  border: 1px solid #000;
+  margin-right: 10px;
+}
+
+.btn-secundario:hover {
+  background: #000;
+  color: #fff;
+}
+
+/*------------------Carrinho vazio------------------*/
+
+.checkout-vazio {
+  text-align: center;
+  padding: 60px 20px;
+  color: #555;
+}
+
+.checkout-vazio a {
+  color: #000;
+  font-weight: 700;
+}
+
+/*------------------Sucesso------------------*/
+
+.checkout-sucesso {
+  text-align: center;
+  padding: 40px 20px;
+  border: 1px solid #e5ddd3;
+  background: #faf7f2;
+}
+
+.checkout-sucesso .bi-check-circle {
+  font-size: 56px;
+  color: #188038;
+}
+
+.checkout-sucesso h2 {
+  font-size: 26px;
+  margin: 15px 0 8px;
+}
+
+.checkout-sucesso p {
+  color: #555;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.sucesso-itens {
+  max-width: 420px;
+  margin: 20px auto;
+  text-align: left;
+  padding: 0 10px;
+}
+
+.sucesso-itens .cart-item-info h3 {
+  font-size: 14px;
+}
+
+.sucesso-itens .cart-subtotal {
+  font-size: 14px;
+}
+
+.sucesso-total {
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+.sucesso-acoes {
+  margin-top: 22px;
+}

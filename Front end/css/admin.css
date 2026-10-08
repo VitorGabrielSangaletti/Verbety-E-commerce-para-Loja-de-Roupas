@@ -4,6 +4,11 @@
 	padding: 30px 20px;
 }
 
+#painelAdmin {
+	/* escondido por padrao: so aparece apos confirmar login de ADMIN */
+	display: none;
+}
+
 #acessoNegado {
 	display: none;
 	color: #b00020;

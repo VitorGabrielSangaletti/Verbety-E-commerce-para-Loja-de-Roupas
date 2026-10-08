@@ -73,7 +73,7 @@ async function iniciar() {
   const categorias = await carregarCategorias();
 
   if (categoriaDaUrl) {
-    // titulo da pagina = nome da categoria, sem depender do select
+    
     const escolhida = categorias.find(
       (cat) => String(cat.idCategoria) === String(categoriaDaUrl)
     );

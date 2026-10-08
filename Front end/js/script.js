@@ -74,17 +74,7 @@ function stopAutoPlay() {
 }
 
 function clickNext() {
-  stopAutoPlay();     
-  nextSlide();
-}
-
-function clickPrev() {
-  stopAutoPlay();
-  prevSlide();
-}
-
-function clickNext() {
-  startAutoPlay();    
+  startAutoPlay();
   nextSlide();
 }
 

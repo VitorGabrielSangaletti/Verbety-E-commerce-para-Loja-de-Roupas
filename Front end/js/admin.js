@@ -5,14 +5,20 @@ const TAMANHOS = ["PP", "P", "M", "G", "GG"];
 
 // confere se quem ta logado e admin
 async function verificarAdmin() {
-    const resposta = await fetch(API + "/api/auth/me", { credentials: "include" });
-    const dados = await resposta.json();
-    if (dados.tipo !== "ADMIN") {
+    try {
+        const resposta = await fetch(API + "/api/auth/me", { credentials: "include" });
+        if (!resposta.ok) throw new Error("HTTP " + resposta.status);
+        const dados = await resposta.json();
+        if (!dados || dados.tipo !== "ADMIN") throw new Error("tipo " + (dados && dados.tipo));
+        document.getElementById("painelAdmin").style.display = "block";
+        return true;
+    } catch (erro) {
+        // qualquer erro (nao logado, servidor fora, resposta invalida): nega acesso
+        console.log("[admin] acesso negado:", erro.message);
         document.getElementById("acessoNegado").style.display = "block";
         document.getElementById("painelAdmin").style.display = "none";
         return false;
     }
-    return true;
 }
 
 // carrega as categorias no select

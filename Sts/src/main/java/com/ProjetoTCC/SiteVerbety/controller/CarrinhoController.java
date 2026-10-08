@@ -128,8 +128,14 @@ public class CarrinhoController {
                 ? body.get("formaPagamento").toString() : null;
         String observacao = body != null && body.get("observacao") != null
                 ? body.get("observacao").toString() : null;
+        List<Long> idsSelecionados = null;
+        if (body != null && body.get("itens") != null) {
+            idsSelecionados = ((List<?>) body.get("itens")).stream()
+                    .map(o -> Long.valueOf(o.toString()))
+                    .toList();
+        }
         try {
-            Pedido carrinho = carrinhoService.finalizar(usuario, formaPagamento, observacao);
+            Pedido carrinho = carrinhoService.finalizar(usuario, formaPagamento, observacao, idsSelecionados);
             return ResponseEntity.ok(resposta(carrinho));
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(Map.of("erro", e.getMessage()));

@@ -29,7 +29,8 @@ async function carregarCarrinho() {
     mensagem.textContent = "";
 
     container.innerHTML = itens.map(item => `
-        <div class="cart-item" data-id="${item.idItemPedido}">
+        <div class="cart-item" data-id="${item.idItemPedido}" data-subtotal="${item.subtotal}">
+            <input type="checkbox" class="cart-selecao" title="Marcar para comprar" checked>
             <img class="cart-item-img" src="../images/${item.produto.imagem}" alt="${item.produto.nome}">
             <div class="cart-item-info">
                 <h3>${item.produto.nome}</h3>
@@ -44,10 +45,18 @@ async function carregarCarrinho() {
 
     resumo.innerHTML = `
         <div class="cart-resumo">
-            <p>Total: <strong>${formatarPreco(carrinho.valorTotal)}</strong></p>
+            <p>Total selecionado: <strong id="totalSelecionado">${formatarPreco(carrinho.valorTotal)}</strong></p>
             <button id="btnFinalizar" class="btn-auth btn-black">Finalizar Compra</button>
         </div>
     `;
+
+    // total dos itens marcados com a bolinha
+    function atualizarTotalSelecionado() {
+        const total = Array.from(document.querySelectorAll(".cart-selecao:checked"))
+            .reduce((soma, chk) => soma + Number(chk.closest(".cart-item").dataset.subtotal), 0);
+        const el = document.getElementById("totalSelecionado");
+        if (el) el.textContent = formatarPreco(total);
+    }
 
     // mudar quantidade
     document.querySelectorAll(".cart-qtd").forEach(input => {
@@ -84,22 +93,20 @@ async function carregarCarrinho() {
         });
     });
 
-    // finalizar compra
-    document.getElementById("btnFinalizar").addEventListener("click", async () => {
-        if (!confirm("Finalizar a compra?")) return;
-        const resposta = await fetch(API + "/api/carrinho/finalizar", {
-            method: "POST",
-            credentials: "include",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ formaPagamento: "PIX" })
-        });
-        const dados = await resposta.json();
-        if (!resposta.ok) {
-            alert(dados.erro || "Não foi possível finalizar");
+    // marcar/desmarcar produtos para a compra
+    document.querySelectorAll(".cart-selecao").forEach(chk => {
+        chk.addEventListener("change", atualizarTotalSelecionado);
+    });
+
+    // finalizar compra: leva para o checkout so com os produtos marcados
+    document.getElementById("btnFinalizar").addEventListener("click", () => {
+        const selecionados = Array.from(document.querySelectorAll(".cart-selecao:checked"))
+            .map(chk => chk.closest(".cart-item").dataset.id);
+        if (selecionados.length === 0) {
+            alert("Marque ao menos um produto para comprar.");
             return;
         }
-        alert("Pedido realizado com sucesso!");
-        window.location.href = "Home.html";
+        window.location.href = "Checkout.html?itens=" + selecionados.join(",");
     });
 }
 
