@@ -1,5 +1,4 @@
 
-
 hr {
   border: none;
   border-top: 1px solid #ddd;
@@ -112,7 +111,7 @@ nav ul li {
 
 
 .texto-promocao{
-  font-size: 30px;
+  font-size: 26px;
   font-weight: 800;
   letter-spacing: 1px;
   color: #111;
@@ -369,7 +368,7 @@ body{
 }
 
 .p2{
-  padding-left: 125px;
+  padding-left: 130px;
   font-size: 15px;
   margin: 0 0 20px;
   font-weight:bolder;
@@ -378,7 +377,7 @@ body{
 }
 
 .p3{
-  padding-left: 60px;
+  padding-left: 110px;
   font-size: 15px;
   max-width: 300px;
   margin: 0 0 7px;
@@ -391,21 +390,21 @@ body{
   width:100px;
   height: 3px;
   background-color: #ffffff;
-  margin: 0px auto  10px 163px ;
+  margin: 0px auto  10px 156px ;
   
 }
 .linha2{
   width:100px;
   height: 3px;
   background-color: #ffffff;
-  margin: 0px auto  10px 170px ;
+  margin: 0px auto  10px 166px ;
   
 }
 .linha3{
   width:100px;
   height: 3px;
   background-color: #ffffff;
-  margin: 0px auto  10px 162px ;
+  margin: 0px auto  10px 156px ;
   
 }
 
@@ -427,6 +426,7 @@ body{
   align-items: center;        
   gap: 40px;
   margin-top: 20px;
+  margin-bottom: 40px;
   width: 100%;
   box-sizing: border-box;
   padding: 0 24px;
@@ -510,6 +510,7 @@ body{
   line-height: 1.7;
   color: #333;
   margin-bottom: 25px;
+
 }
 
 /*---------------------------------------------------------Trocas-----------------------------------------------------------------*/
@@ -550,7 +551,240 @@ body{
   padding: 0px 10px;
 }
 
+/*------------------------------------------------------------footer----------------------------------------------------------*/
+
+:root {
+  --bg: #ffffff;
+  --bg-soft: #ffffff;
+  --text: #000000;
+  --muted: #9aa7c2;
+  --accent: #000000;
+  --radius: 8px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main { flex: 1; }
+
+.footer {
+  background: var(--bg);
+  color: var(--text);
+  padding-top: 64px;
+}
+
+.footer__inner {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 24px 56px;
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr 1.2fr;
+  gap: 48px;
+}
+
+/* Marca */
+.footer__logo {
+  font-size: 50px;
+  font-weight: 700;
+  padding-left: 25%;
+  color: #000;
+  text-decoration: none;
+  font-family: "Great Vibes", cursive;
+}
+
+.footer__brand p {
+  margin: 1px 0 22px;
+  font-size: 20.1px;
+  line-height: 1.6;
+  max-width: 320px;
+  color: #000;
+  /* font-family: "Great Vibes", cursive; */
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.footer__news {
+  display: flex;
+  max-width: 340px;
+  background: var(--bg-soft);
+  border-radius: var(--radius);
+  padding: 4px;
+}
 
 
+.footer__news input::placeholder { color: var(--muted); }
+.footer__news input:focus { outline: none; }
+.footer__news:focus-within { box-shadow: 0 0 0 2px var(--accent); }
+
+.footer__news button {
+  background: var(--accent);
+  color: var(--bg);
+  border: 0;
+  border-radius: 6px;
+  padding: 0 16px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* Colunas */
+.footer__col h3 {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 18px;
+  color: #000;
+}
+
+.footer__col ul {
+  list-style: none;
+  display: grid;
+  gap: 12px;
+  color: #000;
+}
+
+.footer__col li,
+.footer__col a {
+  font-size: 14px;
+
+  text-decoration: none;
+  color: #000;
+  font-weight: bolder;
+  transition: 0.3s;
+}
+
+.footer__col a:hover,
+.footer__col a:focus-visible {
+  color: #ffc936;
+
+}
+
+/* Barra inferior */
+.footer__bar {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 22px 24px;
+  border-top: 1px solid var(--bg-soft);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.footer__bar p {
+  font-size: 13px;
+  color: var(--muted);
+  
+}
+
+.footer__social {
+  display: flex;
+  gap: 10px;
+}
+
+.footer__social a {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--bg-soft);
+  color: var(--text);
+  transition: background .2s, color .2s;
+}
+
+.footer__social a:hover,
+.footer__social a:focus-visible {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.footer__social svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+/* Responsivo */
+@media (max-width: 900px) {
+  .footer__inner { grid-template-columns: 1fr 1fr; }
+  .footer__brand { grid-column: 1 / -1; }
+}
+
+@media (max-width: 520px) {
+  .footer__inner { grid-template-columns: 1fr; gap: 36px; }
+  .footer__bar { flex-direction: column-reverse; text-align: center; }
+}
+
+.linha{
+  color: #000;
+}
+
+.footer {
+  background: var(--bg);
+  color: #00000059;
+  padding-top: 64px;
+  border-top: 1px solid
+}
 
 
+/*------------------------------------------------------------Hero-----------------------------------------------------------*/
+
+
+.hero {
+  height: 350px;
+  background-image: url("../images/ceu.jpg");
+  background-size: 100% auto;
+  background-attachment: fixed;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+
+.conteudo {
+  width: 70%;
+}
+
+.conteudo h1 {
+  font-size: 24px;
+  margin-bottom: 25px;
+}
+
+.cards {
+  display: flex;
+  justify-content: space-between;
+  gap: 50px;
+}
+
+.cards div {
+  flex: 1;
+}
+
+.cards h2 {
+  font-size: 24px;
+  margin-bottom: 8px;
+  color: #000;
+}
+
+.cards p {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #000;
+}
+
+
+.espaco {
+  height: 800px;
+  padding-top: 100px;
+  text-align: center;
+}

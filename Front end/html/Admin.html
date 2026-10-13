@@ -33,62 +33,211 @@
         </div>
     </header>
 
-    <main class="admin-container">
-        <p id="acessoNegado">Acesso restrito a administradores.</p>
+    <main class="admin-wrap">
+        <p id="acessoNegado">Acesso restrito a administradores. Faça login como funcionário em <a href="Login.html">Login</a>.</p>
 
-        <div id="painelAdmin">
-            <h2 class="titulo-pagina">Painel do Administrador</h2>
-            <a href="Catalogo.html" class="btn-voltar">&larr; Ver catálogo</a>
+        <aside class="admin-sidebar" id="adminSidebar">
+            <div class="admin-sidebar__titulo">Painel</div>
+            <nav class="admin-menu">
+                <button type="button" class="menu-item ativo" data-secao="produtos">
+                    <i class="bi bi-box-seam"></i><span>Produtos</span>
+                </button>
+                <button type="button" class="menu-item" data-secao="categorias">
+                    <i class="bi bi-tags"></i><span>Categorias</span>
+                </button>
+                <button type="button" class="menu-item" data-secao="home">
+                    <i class="bi bi-house-gear"></i><span>Home</span>
+                </button>
+            </nav>
+            <a href="Catalogo.html" class="admin-sidebar__voltar">&larr; Ver catálogo</a>
+        </aside>
 
-            <h3 id="formTitulo">Novo produto</h3>
-            <form id="formProduto" class="form-admin">
-                <label>Nome</label>
-                <input type="text" id="nome" required>
+        <section class="admin-conteudo" id="painelAdmin">
 
-                <label>Descrição</label>
-                <textarea id="descricao" rows="3"></textarea>
-
-                <label>Preço (ex: 99.90)</label>
-                <input type="number" id="preco" step="0.01" min="0" required>
-
-                <label>Imagem (nome do arquivo na pasta images/, ex: realShit.png)</label>
-                <input type="text" id="imagem" required>
-
-                <label>Categoria</label>
-                <select id="categoria" required></select>
-
-                <div class="checkbox-linha">
-                    <label><input type="checkbox" id="disponivel" checked> Disponível</label>
-                    <label><input type="checkbox" id="destaque"> Destaque </label>
+            <!-- ============================ PRODUTOS ============================ -->
+            <section class="secao-admin ativo" id="secao-produtos">
+                <div class="secao-cabecalho">
+                    <h1>Produtos</h1>
+                    <p>Cadastre, edite e remova os produtos da loja.</p>
                 </div>
 
-                <h4>Tamanhos e quantidades </h4>
-                <div class="tamanhos-input">
-                    <label>PP <input type="number" id="qtd_PP" min="0"></label>
-                    <label>P <input type="number" id="qtd_P" min="0"></label>
-                    <label>M <input type="number" id="qtd_M" min="0"></label>
-                    <label>G <input type="number" id="qtd_G" min="0"></label>
-                    <label>GG <input type="number" id="qtd_GG" min="0"></label>
+                <div class="painel-card">
+                    <h2 id="formTitulo"><i class="bi bi-plus-circle"></i> Novo produto</h2>
+
+                    <form id="formProduto" class="form-admin">
+                        <div class="campo">
+                            <label for="nome">Nome</label>
+                            <input type="text" id="nome" required>
+                        </div>
+
+                        <div class="campo">
+                            <label for="descricao">Descrição</label>
+                            <textarea id="descricao" rows="3"></textarea>
+                        </div>
+
+                        <div class="form-linha">
+                            <div class="campo">
+                                <label for="preco">Preço (ex: 99.90)</label>
+                                <input type="number" id="preco" step="0.01" min="0" required>
+                            </div>
+                            <div class="campo">
+                                <label for="imagem">Imagem (arquivo em images/, ex: VestidoMidi.png)</label>
+                                <input type="text" id="imagem" required>
+                            </div>
+                        </div>
+
+                        <div class="form-linha">
+                            <div class="campo">
+                                <label for="categoria">Categoria</label>
+                                <select id="categoria" required></select>
+                            </div>
+                            <div class="campo campo-toggles">
+                                <label>Situação</label>
+                                <div class="checkbox-linha">
+                                    <label class="check"><input type="checkbox" id="disponivel" checked> Disponível</label>
+                                    <label class="check"><input type="checkbox" id="destaque"> Destaque</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="campo">
+                            <label>Tamanhos e quantidades</label>
+                            <div class="tamanhos-input">
+                                <label>PP <input type="number" id="qtd_PP" min="0"></label>
+                                <label>P <input type="number" id="qtd_P" min="0"></label>
+                                <label>M <input type="number" id="qtd_M" min="0"></label>
+                                <label>G <input type="number" id="qtd_G" min="0"></label>
+                                <label>GG <input type="number" id="qtd_GG" min="0"></label>
+                            </div>
+                        </div>
+
+                        <div class="form-acoes">
+                            <button type="submit" id="btnSalvar" class="btn-primario">Adicionar produto</button>
+                            <button type="button" id="btnCancelar" class="btn-secundario">Cancelar edição</button>
+                        </div>
+                    </form>
                 </div>
 
-                <button type="submit" id="btnSalvar" class="btn-login">Adicionar produto</button>
-                <button type="button" id="btnCancelar" class="btn-cancelar">Cancelar edição</button>
-            </form>
+                <div class="painel-card">
+                    <h2><i class="bi bi-grid"></i> Produtos cadastrados</h2>
+                    <div class="tabela-scroll">
+                        <table class="tabela-admin">
+                            <thead>
+                                <tr>
+                                    <th>ID</th><th>Foto</th><th>Nome</th><th>Preço</th><th>Tamanhos</th><th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="listaProdutos"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
 
-            <h3>Produtos cadastrados</h3>
-            <table class="tabela-admin">
-                <thead>
-                    <tr>
-                        <th>ID</th><th>Foto</th><th>Nome</th><th>Preço</th><th>Tamanhos</th><th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody id="listaProdutos"></tbody>
-            </table>
-        </div>
+            <!-- ============================ CATEGORIAS ============================ -->
+            <section class="secao-admin" id="secao-categorias">
+                <div class="secao-cabecalho">
+                    <h1>Categorias</h1>
+                    <p>Organize os produtos por categoria (aparecem no menu do catálogo).</p>
+                </div>
+
+                <div class="painel-card">
+                    <h2><i class="bi bi-plus-circle"></i> Nova categoria</h2>
+                    <form id="formCategoria" class="form-admin form-inline">
+                        <div class="campo">
+                            <label for="nomeCategoria">Nome da categoria</label>
+                            <input type="text" id="nomeCategoria" required>
+                        </div>
+                        <button type="submit" class="btn-primario">Adicionar</button>
+                    </form>
+                </div>
+
+                <div class="painel-card">
+                    <h2><i class="bi bi-tags"></i> Categorias cadastradas</h2>
+                    <div class="tabela-scroll">
+                        <table class="tabela-admin">
+                            <thead>
+                                <tr><th>ID</th><th>Nome</th><th>Ações</th></tr>
+                            </thead>
+                            <tbody id="listaCategorias"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================ HOME ============================ -->
+            <section class="secao-admin" id="secao-home">
+                <div class="secao-cabecalho">
+                    <h1>Home</h1>
+                    <p>Edite os elementos que aparecem na página inicial: banner, carrossel e cards.</p>
+                </div>
+
+                <form id="formHome">
+                    <div class="painel-card">
+                        <h2><i class="bi bi-megaphone"></i> Banner</h2>
+                        <div class="form-linha">
+                            <div class="campo">
+                                <label for="bannerImagem">Imagem do banner (arquivo em images/)</label>
+                                <input type="text" id="bannerImagem" placeholder="ex: BannerPrimavera.png">
+                            </div>
+                            <div class="campo">
+                                <label for="bannerTexto">Texto do banner</label>
+                                <input type="text" id="bannerTexto" placeholder="ex: DESCONTO DE PRIMAVERA">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="painel-card">
+                        <h2><i class="bi bi-images"></i> Carrossel do topo</h2>
+                        <div class="campo">
+                            <label for="carrossel">Imagens do carrossel (uma por linha, na ordem)</label>
+                            <textarea id="carrossel" rows="4" placeholder="banabana.jpeg&#10;ilicito.png&#10;Docthos.jpeg"></textarea>
+                            <small class="dica">Digite só o nome do arquivo que está na pasta images/.</small>
+                        </div>
+                    </div>
+
+                    <div class="painel-card">
+                        <h2><i class="bi bi-card-image"></i> Cards de categoria</h2>
+                        <div class="cards-admin">
+                            <div class="card-admin-bloco">
+                                <h3>Card 1</h3>
+                                <div class="campo"><label>Imagem</label><input type="text" id="card0_imagem"></div>
+                                <div class="campo"><label>Título</label><input type="text" id="card0_titulo"></div>
+                                <div class="campo"><label>Texto</label><input type="text" id="card0_texto"></div>
+                            </div>
+                            <div class="card-admin-bloco">
+                                <h3>Card 2</h3>
+                                <div class="campo"><label>Imagem</label><input type="text" id="card1_imagem"></div>
+                                <div class="campo"><label>Título</label><input type="text" id="card1_titulo"></div>
+                                <div class="campo"><label>Texto</label><input type="text" id="card1_texto"></div>
+                            </div>
+                            <div class="card-admin-bloco">
+                                <h3>Card 3</h3>
+                                <div class="campo"><label>Imagem</label><input type="text" id="card2_imagem"></div>
+                                <div class="campo"><label>Título</label><input type="text" id="card2_titulo"></div>
+                                <div class="campo"><label>Texto</label><input type="text" id="card2_texto"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-acoes form-acoes--fixo">
+                        <button type="submit" class="btn-primario"><i class="bi bi-check-lg"></i> Salvar alterações da Home</button>
+                    </div>
+                </form>
+
+                <div class="painel-card">
+                    <h2><i class="bi bi-star"></i> Produtos em destaque</h2>
+                    <p class="dica">Marque os produtos que devem aparecer na vitrine de destaques da Home.</p>
+                    <div id="listaDestaquesAdmin" class="destaques-admin"></div>
+                </div>
+            </section>
+
+        </section>
     </main>
 
-<script src="../js/nav-categorias.js"></script>
-<script src="../js/auth.js"></script>
-<script src="../js/admin.js"></script>
+    <div id="toast" class="toast"></div>
+
+    <script src="../js/nav-categorias.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/admin.js"></script>
 </body>
 </html>

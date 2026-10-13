@@ -125,9 +125,42 @@ CREATE TABLE IF NOT EXISTS item_pedido (
         FOREIGN KEY (id_produto) REFERENCES produto (id_produto)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- --------------------------------------------------------
+-- Tabela: home_config
+-- Configuracao da Home editavel pelo admin (linha unica, id_config = 1)
+-- Banner, 3 cards de categoria e imagens do carrossel (uma por linha)
+-- --------------------------------------------------------
+CREATE TABLE IF NOT EXISTS home_config (
+    id_config BIGINT NOT NULL,
+    banner_imagem VARCHAR(255),
+    banner_texto VARCHAR(255),
+    card1_imagem VARCHAR(255),
+    card1_titulo VARCHAR(255),
+    card1_texto VARCHAR(255),
+    card2_imagem VARCHAR(255),
+    card2_titulo VARCHAR(255),
+    card2_texto VARCHAR(255),
+    card3_imagem VARCHAR(255),
+    card3_titulo VARCHAR(255),
+    card3_texto VARCHAR(255),
+    carrossel TEXT,
+    PRIMARY KEY (id_config)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- ============================================================
 -- Dados iniciais (opcionais - rode se quiser)
 -- ============================================================
+
+-- Configuracao inicial da Home (o backend tambem cria isso sozinho na 1a leitura)
+INSERT INTO home_config (id_config, banner_imagem, banner_texto,
+    card1_imagem, card1_titulo, card1_texto,
+    card2_imagem, card2_titulo, card2_texto,
+    card3_imagem, card3_titulo, card3_texto, carrossel) VALUES
+(1, 'BannerPrimavera.png', 'DESCONTO DE PRIMAVERA',
+ 'VestidoCasualLinho.png', 'VESTIDOS', 'EXPLORE NOVAS TENDÊNCIAS',
+ 'VestidoMidi.png', 'MASCULINO', 'ROUPAS PARA CADA TIPO',
+ 'VestidoCurtoVerao.png', 'FEMININO', 'AS MELHORES ESCOLHAS SE ENCONTRAM AQUI',
+ 'banabana.jpeg\nilicito.png\nDocthos.jpeg');
 
 -- Categorias reais (ids usados pelo front)
 INSERT INTO categoria (id_categoria, nome) VALUES (1, 'Vestidos'), (3, 'Roupas'), (5, 'Acessórios');
