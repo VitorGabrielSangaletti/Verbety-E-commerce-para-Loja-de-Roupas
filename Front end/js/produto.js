@@ -6,12 +6,18 @@ let tamanhoSelecionado = null;
 const parametros = new URLSearchParams(window.location.search);
 const idProduto = parametros.get("id");
 
-// verifica se o usuario esta logado (usuario comum, nao admin)
-async function usuarioLogado() {
+// descobre se tem alguem logado e qual o tipo (USUARIO ou ADMIN)
+async function situacaoLogin() {
     const resposta = await fetch(API + "/api/auth/me", { credentials: "include" });
-    if (!resposta.ok) return false;
+    if (!resposta.ok) return { logado: false, tipo: null };
     const dados = await resposta.json();
-    return dados.tipo === "USUARIO";
+    if (!dados.tipo) return { logado: false, tipo: null };
+    return { logado: true, tipo: dados.tipo };
+}
+
+// admin/funcionario nao compra: avisa em vez de jogar pro login
+function avisarApenasCliente() {
+    alert("Apenas clientes podem comprar. Saia e entre como cliente para adicionar ao carrinho.");
 }
 
 // adiciona 1 unidade do produto/tamanho no carrinho.
@@ -112,8 +118,14 @@ async function carregarProduto() {
             }
 
             // visitante nao pode comprar: manda pro login
-            if (!(await usuarioLogado())) {
+            const situacao = await situacaoLogin();
+            if (!situacao.logado) {
                 window.location.href = "Login.html";
+                return;
+            }
+            // admin nao compra: avisa e nao redireciona
+            if (situacao.tipo !== "USUARIO") {
+                avisarApenasCliente();
                 return;
             }
 
@@ -129,8 +141,13 @@ async function carregarProduto() {
                 return;
             }
 
-            if (!(await usuarioLogado())) {
+            const situacao = await situacaoLogin();
+            if (!situacao.logado) {
                 window.location.href = "Login.html";
+                return;
+            }
+            if (situacao.tipo !== "USUARIO") {
+                avisarApenasCliente();
                 return;
             }
 

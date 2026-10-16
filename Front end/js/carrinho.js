@@ -11,8 +11,16 @@ async function carregarCarrinho() {
 
     const resposta = await fetch(API + "/api/carrinho", { credentials: "include" });
 
-    // quando nao tiver logado vai pro login
+    // sem login vai pro login; admin nao tem carrinho (avisa e fica na pagina)
     if (resposta.status === 401) {
+        const me = await fetch(API + "/api/auth/me", { credentials: "include" })
+            .then(r => r.json()).catch(() => ({}));
+        if (me.tipo === "ADMIN") {
+            container.innerHTML = "";
+            resumo.innerHTML = "";
+            mensagem.textContent = "Apenas clientes podem ter carrinho. Saia e entre como cliente.";
+            return;
+        }
         window.location.href = "Login.html";
         return;
     }

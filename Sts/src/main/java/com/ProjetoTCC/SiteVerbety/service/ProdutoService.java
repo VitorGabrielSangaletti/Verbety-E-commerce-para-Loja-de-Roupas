@@ -1,10 +1,13 @@
 package com.ProjetoTCC.SiteVerbety.service;
 
+import com.ProjetoTCC.SiteVerbety.dto.ProdutoVendidoDTO;
 import com.ProjetoTCC.SiteVerbety.model.Produto;
+import com.ProjetoTCC.SiteVerbety.repository.ItemPedidoRepository;
 import com.ProjetoTCC.SiteVerbety.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +16,9 @@ public class ProdutoService {
 
 	@Autowired
 	private ProdutoRepository produtoRepository;
+
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 
 	public List<Produto> listarTodos() {
 		return produtoRepository.findAll();
@@ -48,6 +54,20 @@ public class ProdutoService {
 	
 	public List<Produto> buscarDestaques() {
 		return produtoRepository.findByDestaqueTrue();
+	}
+
+	// Ranking dos mais vendidos (usado na tela de Destaques)
+	public List<ProdutoVendidoDTO> maisVendidos(int limite) {
+		List<ProdutoVendidoDTO> lista = new ArrayList<>();
+		for (Object[] linha : itemPedidoRepository.maisVendidos()) {
+			Produto produto = (Produto) linha[0];
+			Long total = ((Number) linha[1]).longValue();
+			lista.add(new ProdutoVendidoDTO(produto, total));
+			if (limite > 0 && lista.size() >= limite) {
+				break;
+			}
+		}
+		return lista;
 	}
 
 }

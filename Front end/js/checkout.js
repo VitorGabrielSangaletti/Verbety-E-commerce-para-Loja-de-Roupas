@@ -12,8 +12,18 @@ async function carregarCheckout() {
 
     const resposta = await fetch(API + "/api/carrinho", { credentials: "include" });
 
-    // sem login nao tem carrinho: vai pro login
+    // sem login nao tem carrinho: vai pro login; admin nao compra (avisa)
     if (resposta.status === 401) {
+        const me = await fetch(API + "/api/auth/me", { credentials: "include" })
+            .then(r => r.json()).catch(() => ({}));
+        if (me.tipo === "ADMIN") {
+            conteudo.innerHTML = `
+                <div class="checkout-vazio">
+                    <p>Apenas clientes podem finalizar compras.</p>
+                    <p><a href="Home.html">Voltar para a Home</a></p>
+                </div>`;
+            return;
+        }
         window.location.href = "Login.html";
         return;
     }

@@ -1,0 +1,102 @@
+/* ---------------- Tela de Destaques ---------------- */
+
+.podio-secao,
+.vitrine-secao {
+  margin-bottom: 55px;
+}
+
+.subtitulo {
+  font-size: 20px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 22px;
+}
+
+/* ----- Podio dos mais vendidos ----- */
+.podio {
+  display: flex;
+  gap: 25px;
+  justify-content: center;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  padding-top: 14px;
+}
+
+.podio-item {
+  position: relative;
+  width: 220px;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 18px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.podio-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
+}
+
+.podio-item.primeiro {
+  border-color: #ffc936;
+  box-shadow: 0 8px 22px rgba(255, 201, 54, 0.4);
+  transform: scale(1.04);
+}
+
+.podio-item img {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  margin-bottom: 12px;
+}
+
+.podio-item h4 {
+  font-size: 15px;
+  margin-bottom: 6px;
+}
+
+.podio-item strong {
+  display: block;
+  margin-top: 8px;
+}
+
+.podio-posicao {
+  position: absolute;
+  top: -14px;
+  left: -14px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #000;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.podio-item.primeiro .podio-posicao {
+  background: #ffc936;
+  color: #000;
+}
+
+.podio-vendas {
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #777;
+}
+
+/* ----- Filtros ----- */
+.filtros-destaques select {
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  background: #fff;
+  font-size: 14px;
+  color: #000;
+  cursor: pointer;
+  min-width: 210px;
+}

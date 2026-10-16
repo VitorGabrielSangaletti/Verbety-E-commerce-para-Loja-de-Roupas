@@ -98,6 +98,7 @@ nav ul li {
   overflow: hidden;
   position: relative;
   margin-top: 20px;
+  margin-bottom: 5px;
   border-radius: 2px;
 
 }
@@ -114,6 +115,7 @@ nav ul li {
   font-size: 26px;
   font-weight: 800;
   letter-spacing: 1px;
+  margin-bottom: 100px;
   color: #111;
   margin:  auto;
   text-align: center;

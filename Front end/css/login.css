@@ -2,7 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 body {
@@ -11,7 +11,8 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #f5f5f5;
+  background-image: url("../images/Editorial\ em\ Amarelo\ Limão.png");
+  background-size: cover;
 }
 
 .header {
@@ -25,23 +26,32 @@ body {
 }
 
 .logo {
-  height: 60px;
-  width: 165px;
+ font-family: "Great Vibes", cursive;
+ align-self: center;
+ margin-left: 32%;
+ font-size: 45px;
+ font-weight: 500;
+ 
 }
 
+
+
 .login-container {
-  background: #ffffff;
-  padding: 40px 35px;
+  background: #ffffff2d;
+  padding: 40px 11px;
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  width: 100%;
-  max-width: 380px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.212);
+  width: 100%; 
+  max-width: 400px;
   margin-top: 30px;
+  margin-bottom: 30px;
+  margin-right: 7%;
+  align-self: flex-end;
 }
 
 .login-title {
   text-align: center;
-  font-size: 1.8rem;
+  font-size: 25px;
   font-weight: 800;
   margin-bottom: 20px;
   color: #000;
@@ -49,7 +59,7 @@ body {
 
 .login-toggle {
   display: flex;
-  background: #f0f0f0;
+  background: #ffffff;
   border-radius: 8px;
   padding: 4px;
   margin-bottom: 25px;

@@ -1,5 +1,6 @@
 package com.ProjetoTCC.SiteVerbety.controller;
 
+import com.ProjetoTCC.SiteVerbety.dto.ProdutoVendidoDTO;
 import com.ProjetoTCC.SiteVerbety.model.Produto;
 import com.ProjetoTCC.SiteVerbety.service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,12 @@ public class ProdutoController {
     @GetMapping("/destaques")
     public List<Produto> buscarDestaques() {
         return produtoService.buscarDestaques();
+    }
+
+    // ranking dos mais vendidos (tela de Destaques)
+    @GetMapping("/mais-vendidos")
+    public List<ProdutoVendidoDTO> maisVendidos(@RequestParam(defaultValue = "10") int limite) {
+        return produtoService.maisVendidos(limite);
     }
 
     //busca por nome
