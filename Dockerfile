@@ -6,7 +6,7 @@ COPY Sts/pom.xml ./
 RUN mvn -B -q dependency:go-offline
 
 COPY Sts/src ./src
-COPY "Front end" ./src/main/resources/static
+COPY ["Front end", "./src/main/resources/static"]
 
 RUN mvn -B clean package -DskipTests
 
