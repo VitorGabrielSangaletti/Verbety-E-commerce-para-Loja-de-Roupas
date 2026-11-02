@@ -15,28 +15,26 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        // o front-end pode estar em varios lugares dependendo de como o projeto
-        // foi aberto, entao tenta varios e so usa os que realmente existem:
-        //  - ../Front end : rodando a API de dentro da pasta Sts
-        //  - Front end    : rodando a API da raiz do repositorio
-        //  - pasta de trabalho na area de trabalho
-        List<String> caminhos = new ArrayList<>();
+        List<String> locais = new ArrayList<>();
 
-        adicionarSeExistir(caminhos, Paths.get("..", "Front end"));
-        adicionarSeExistir(caminhos, Paths.get("Front end"));
-        adicionarSeExistir(caminhos, Paths.get("C:/Users/Vitinho/Desktop/Front end"));
+        String[] candidatos = {
+            "../Front end",
+            "Front end",
+            "C:/Users/Vitinho/Desktop/Front end"
+        };
 
-        if (caminhos.isEmpty()) {
-            return;
+        for (String c : candidatos) {
+            Path p = Paths.get(c).toAbsolutePath().normalize();
+            if (Files.isDirectory(p)) {
+                locais.add(p.toUri().toString());
+            }
+        }
+
+        if (locais.isEmpty()) {
+            locais.add(Paths.get("").toAbsolutePath().toUri().toString());
         }
 
         registry.addResourceHandler("/site/**")
-                .addResourceLocations(caminhos.toArray(new String[0]));
-    }
-
-    private void adicionarSeExistir(List<String> caminhos, Path pasta) {
-        if (Files.isDirectory(pasta)) {
-            caminhos.add("file:" + pasta.toAbsolutePath().normalize().toUri());
-        }
+                .addResourceLocations(locais.toArray(new String[0]));
     }
 }

@@ -36,6 +36,12 @@ public class ProdutoController {
         return produtoService.buscarPorCategoria(idCategoria);
     }
 
+    //busca por genero (masculino/feminino/acessorio) usado no header
+    @GetMapping("/genero/{genero}")
+    public List<Produto> buscarPorGenero(@PathVariable String genero) {
+        return produtoService.buscarPorGenero(genero);
+    }
+
     //busca por produtos disponiveis
     @GetMapping("/disponiveis")
     public List<Produto> buscarDisponiveis() {
@@ -46,6 +52,12 @@ public class ProdutoController {
     @GetMapping("/destaques")
     public List<Produto> buscarDestaques() {
         return produtoService.buscarDestaques();
+    }
+
+    // busca produtos em destaque da Home (vitrine da pagina inicial)
+    @GetMapping("/destaques-home")
+    public List<Produto> buscarDestaquesHome() {
+        return produtoService.buscarDestaquesHome();
     }
 
     // ranking dos mais vendidos (tela de Destaques)

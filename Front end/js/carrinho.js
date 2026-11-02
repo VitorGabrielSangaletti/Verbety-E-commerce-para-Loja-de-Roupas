@@ -1,4 +1,4 @@
-const API = "http://localhost:8080";
+﻿const API = "";
 
 function formatarPreco(valor) {
     return "R$ " + Number(valor).toFixed(2).replace(".", ",");
@@ -11,7 +11,7 @@ async function carregarCarrinho() {
 
     const resposta = await fetch(API + "/api/carrinho", { credentials: "include" });
 
-    // sem login vai pro login; admin nao tem carrinho (avisa e fica na pagina)
+    // Se o admin tentar adicionar algo ao carrinho, ele Ã© mandado pro login porque sÃ³ cliente pode comprar
     if (resposta.status === 401) {
         const me = await fetch(API + "/api/auth/me", { credentials: "include" })
             .then(r => r.json()).catch(() => ({}));
@@ -31,19 +31,19 @@ async function carregarCarrinho() {
     if (itens.length === 0) {
         container.innerHTML = "";
         resumo.innerHTML = "";
-        mensagem.textContent = "Seu carrinho está vazio.";
+        mensagem.textContent = "Seu carrinho estÃ¡ vazio.";
         return;
     }
     mensagem.textContent = "";
 
     container.innerHTML = itens.map(item => `
-        <div class="cart-item" data-id="${item.idItemPedido}" data-subtotal="${item.subtotal}">
+        <div class="cart-item" data-id="${item.idItemPedido}" data-produto="${item.produto.idProduto}" data-subtotal="${item.subtotal}">
             <input type="checkbox" class="cart-selecao" title="Marcar para comprar" checked>
             <img class="cart-item-img" src="../images/${item.produto.imagem}" alt="${item.produto.nome}">
             <div class="cart-item-info">
                 <h3>${item.produto.nome}</h3>
                 <p>Tamanho: ${item.tamanho}</p>
-                <p>Preço: ${formatarPreco(item.precoUnidade)}</p>
+                <p>PreÃ§o: ${formatarPreco(item.precoUnidade)}</p>
             </div>
             <input type="number" class="cart-qtd" value="${item.quantidade}" min="1">
             <p class="cart-subtotal">${formatarPreco(item.subtotal)}</p>
@@ -101,12 +101,20 @@ async function carregarCarrinho() {
         });
     });
 
+    // clicar na foto ou no nome abre a pagina do produto
+    document.querySelectorAll(".cart-item-img, .cart-item-info").forEach(elemento => {
+        elemento.addEventListener("click", () => {
+            const idProduto = elemento.closest(".cart-item").dataset.produto;
+            if (idProduto) window.location.href = "Produto.html?id=" + idProduto;
+        });
+    });
+
     // marcar/desmarcar produtos para a compra
     document.querySelectorAll(".cart-selecao").forEach(chk => {
         chk.addEventListener("change", atualizarTotalSelecionado);
     });
 
-    // finalizar compra: leva para o checkout so com os produtos marcados
+    // leva para o checkout so com os produtos marcados
     document.getElementById("btnFinalizar").addEventListener("click", () => {
         const selecionados = Array.from(document.querySelectorAll(".cart-selecao:checked"))
             .map(chk => chk.closest(".cart-item").dataset.id);

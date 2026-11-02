@@ -1,8 +1,3 @@
-// Carrossel da Home (Verbety).
-// Refeito em 13/10 para poder ser (re)inicializado depois que o home.js monta
-// as imagens que vieram da API. O home.js sinaliza com window.homeDinamico = true
-// que ele mesmo vai chamar window.iniciarSlider() quando os slides estiverem prontos.
-
 let slideIndex = 1;
 let intervalId = null;
 let isMoving = false;
@@ -18,7 +13,7 @@ function iniciarSlider() {
   const track = document.querySelector(".track");
   if (!track) return;
 
-  // limpa qualquer inicializacao anterior (permite reiniciar com slides novos)
+  // permite reiniciar com slides novos
   clearInterval(intervalId);
   isMoving = false;
   track.querySelectorAll(".slide.clone").forEach((clone) => clone.remove());
@@ -93,11 +88,6 @@ function handleTransitionEnd(e) {
     jumpTo(slideIndex);
   }
   isMoving = false;
-}
-
-function stopAutoPlay() {
-  clearInterval(intervalId);
-  intervalId = null;
 }
 
 // usados pelos botões com onclick no Home.html

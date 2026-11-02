@@ -18,6 +18,12 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long>{
 	// Buscar produtos por nome
 	List<Produto> findByNomeContainingIgnoreCase(String nome);
 	
+	// Buscar produtos por genero (masculino/feminino/acessorio/unissex)
+	List<Produto> findByGeneroIgnoreCase(String genero);
+	
 	// Buscar produtos em destaque (carrossel)
 	List<Produto> findByDestaqueTrue();
+	
+	// Buscar produtos em destaque da Home (vitrine da pagina inicial)
+	List<Produto> findByDestaqueHomeTrue();
 }

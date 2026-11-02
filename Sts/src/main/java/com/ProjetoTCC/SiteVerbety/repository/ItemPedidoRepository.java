@@ -19,4 +19,8 @@ public interface ItemPedidoRepository extends JpaRepository<ItemPedido, Long> {
             + "WHERE i.pedido.status <> 'ABERTO' "
             + "GROUP BY i.produto ORDER BY SUM(i.quantidade) DESC")
     List<Object[]> maisVendidos();
+
+    // Soma das quantidades vendidas (ignora o carrinho ABERTO)
+    @Query("SELECT SUM(i.quantidade) FROM ItemPedido i WHERE i.pedido.status <> 'ABERTO'")
+    Long somarItensVendidos();
 }

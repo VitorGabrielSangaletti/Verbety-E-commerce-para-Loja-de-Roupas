@@ -31,8 +31,11 @@ CREATE TABLE IF NOT EXISTS produto (
     descricao TEXT,
     preco DOUBLE NOT NULL,
     imagem VARCHAR(255) NOT NULL,
+    imagem2 VARCHAR(255) DEFAULT NULL,
     disponivel TINYINT(1) DEFAULT NULL,
     destaque BIT(1) DEFAULT NULL,
+    destaque_home BIT(1) DEFAULT NULL,
+    genero VARCHAR(20) DEFAULT NULL,
     PRIMARY KEY (id_produto),
     KEY id_categoria (id_categoria),
     CONSTRAINT fk_produto_categoria

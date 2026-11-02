@@ -1,5 +1,5 @@
-//verifica quem ta logado, tipo usuario ou funcianario
-fetch("http://localhost:8080/api/auth/me", {
+﻿//verifica quem ta logado, tipo usuario ou funcianario
+fetch("/api/auth/me", {
     method: "GET",
     credentials: "include"
 })
@@ -25,7 +25,7 @@ fetch("http://localhost:8080/api/auth/me", {
 
         linkConta.addEventListener("click", (event) => {
             event.preventDefault();
-            fetch("http://localhost:8080/api/auth/logout", {
+            fetch("/api/auth/logout", {
                 method: "POST",
                 credentials: "include"
             }).then(() => {

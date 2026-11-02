@@ -1,0 +1,12 @@
+.git
+.gitignore
+README.md
+Banco
+
+**/target
+**/.settings
+**/.classpath
+**/.project
+**/.factorypath
+**/*.iml
+**/.idea

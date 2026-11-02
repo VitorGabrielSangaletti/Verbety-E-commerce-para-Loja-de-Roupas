@@ -1,18 +1,6 @@
-// Home dinamica (Verbety) - atualizado em 13/10.
-//
-// A Home.html continua com os textos/imagens fixos. Este arquivo, que ja era
-// carregado pela Home, agora busca a configuracao salva pelo painel do admin
-// (GET /api/home) e os produtos marcados como destaque (GET /api/produtos/destaques),
-// e sobrescreve o conteudo fixo. Se a API estiver fora, nada muda: a Home fica
-// exatamente como esta no HTML.
-//
-// Importante: nao mexemos no Home.html. Tambem avisamos o script.js (carrossel)
-// que ele deve esperar, pois as imagens dos slides chegam depois.
+﻿(() => {
+  const API = "";
 
-(() => {
-  const API = "http://localhost:8080";
-
-  // avisa o script.js que a Home vai montar o carrossel dinamicamente
   window.homeDinamico = true;
 
   const imagem = (arquivo) => "../images/" + arquivo;
@@ -21,7 +9,7 @@
     try {
       const [respostaConfig, respostaDestaques] = await Promise.all([
         fetch(API + "/api/home", { credentials: "include" }),
-        fetch(API + "/api/produtos/destaques", { credentials: "include" })
+        fetch(API + "/api/produtos/destaques-home", { credentials: "include" })
       ]);
 
       if (respostaConfig.ok) {
@@ -37,7 +25,7 @@
     } catch (erro) {
       console.log("[home] API indisponivel, mantendo conteudo estatico:", erro.message);
     } finally {
-      // com ou sem API, inicia o carrossel (com as imagens que estiverem no .track)
+      // com ou sem API, inicia o carrossel 
       if (typeof window.iniciarSlider === "function") {
         window.iniciarSlider();
       }
@@ -105,16 +93,17 @@
       card.innerHTML = `
         <div class="imagem-produto">
           <img src="${imagem(p.imagem)}" class="imagem-1" onerror="this.src='../images/guest.png'">
-          <img src="${imagem(p.imagem)}" class="imagem-2" onerror="this.src='../images/guest.png'">
-          <i class="bi bi-heart"></i>
-          <i class="bi bi-bag"></i>
+          <img src="${imagem(p.imagem2 || p.imagem)}" class="imagem-2" onerror="this.src='../images/guest.png'">
+          <button type="button" class="btn-sacola" data-add-carrinho="${p.idProduto}" aria-label="Adicionar ${p.nome} ao carrinho">
+            <i class="bi bi-bag"></i>
+          </button>
         </div>
         <p class="nome">${p.nome}</p>
         <hr>
         <strong>R$ ${preco}</strong>
       `;
       card.addEventListener("click", (event) => {
-        if (event.target.closest("i")) return; // clicar no coração/sacolinha nao navega
+        if (event.target.closest("[data-add-carrinho]")) return; // clicar na sacolinha nao navega
         window.location.href = "Produto.html?id=" + p.idProduto;
       });
       lista.appendChild(card);

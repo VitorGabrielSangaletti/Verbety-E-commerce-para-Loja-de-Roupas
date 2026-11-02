@@ -50,11 +50,23 @@ public class Produto {
 	@Column(name = "imagem", nullable = false, length = 255)
 	private String imagem;
 
+	// Segunda imagem, usada na troca ao passar o mouse no card (hover)
+	@Column(name = "imagem2", length = 255)
+	private String imagem2;
+
 	@Column(name = "disponivel")
 	private Boolean disponivel;
 	
     @Column(name = "destaque")
     private Boolean destaque;
+
+    // Aparece na vitrine de destaques da Home (separado do destaque da pagina)
+    @Column(name = "destaque_home")
+    private Boolean destaqueHome;
+
+    // Genero do produto: MASCULINO, FEMININO, ACESSORIO ou UNISSEX
+    @Column(name = "genero", length = 20)
+    private String genero;
 
     @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("produto")
@@ -108,6 +120,14 @@ public class Produto {
 		this.imagem = imagem;
 	}
 
+	public String getImagem2() {
+		return imagem2;
+	}
+
+	public void setImagem2(String imagem2) {
+		this.imagem2 = imagem2;
+	}
+
 	public Boolean getDisponivel() {
 		return disponivel;
 	}
@@ -122,6 +142,22 @@ public class Produto {
 
     public void setDestaque(Boolean destaque) {
         this.destaque = destaque;
+    }
+
+    public Boolean getDestaqueHome() {
+        return destaqueHome;
+    }
+
+    public void setDestaqueHome(Boolean destaqueHome) {
+        this.destaqueHome = destaqueHome;
+    }
+
+    public String getGenero() {
+        return genero;
+    }
+
+    public void setGenero(String genero) {
+        this.genero = genero;
     }
 
     public List<ProdutoTamanho> getTamanhos() {

@@ -1,18 +1,16 @@
-// Checkout: revisa os itens, escolhe pagamento e confirma o pedido
-
-const API = "http://localhost:8080";
+﻿const API = "";
 
 function formatarPreco(valor) {
     return "R$ " + Number(valor).toFixed(2).replace(".", ",");
 }
 
-// carrega o carrinho (pedido ABERTO) do usuario logado
+// carrega o carrinho do usuario logado
 async function carregarCheckout() {
     const conteudo = document.getElementById("conteudoCheckout");
 
     const resposta = await fetch(API + "/api/carrinho", { credentials: "include" });
 
-    // sem login nao tem carrinho: vai pro login; admin nao compra (avisa)
+    // se tiver sem login vai pro login e se for admin nao compra 
     if (resposta.status === 401) {
         const me = await fetch(API + "/api/auth/me", { credentials: "include" })
             .then(r => r.json()).catch(() => ({}));
@@ -31,8 +29,7 @@ async function carregarCheckout() {
     const carrinho = await resposta.json();
 
     // filtros vindos na URL:
-    //  - itens=3,5  -> so os itens marcados no carrinho
-    //  - produto=X&tamanho=PP -> compra direto de um produto
+
     const parametros = new URLSearchParams(window.location.search);
     const idsSelecionados = (parametros.get("itens") || "").split(",").map(Number).filter(n => n > 0);
     const produtoDireto = parametros.get("produto");
@@ -55,7 +52,7 @@ async function carregarCheckout() {
         conteudo.innerHTML = `
             <div class="checkout-vazio">
                 <p>Nenhum produto selecionado para a compra.</p>
-                <p><a href="Carrinho.html">Voltar para o carrinho</a> · <a href="Catalogo.html">Ver catálogo</a></p>
+                <p><a href="Carrinho.html">Voltar para o carrinho</a> Â· <a href="Catalogo.html">Ver catÃ¡logo</a></p>
             </div>`;
         return;
     }
@@ -66,7 +63,7 @@ async function carregarCheckout() {
             <div class="cart-item-info">
                 <h3>${item.produto.nome}</h3>
                 <p>Tamanho: ${item.tamanho}</p>
-                <p>Preço: ${formatarPreco(item.precoUnidade)}</p>
+                <p>PreÃ§o: ${formatarPreco(item.precoUnidade)}</p>
             </div>
             <input type="number" class="cart-qtd" value="${item.quantidade}" min="1">
             <p class="cart-subtotal">${formatarPreco(item.subtotal)}</p>
@@ -83,12 +80,12 @@ async function carregarCheckout() {
             <label for="formaPagamento">Forma de pagamento</label>
             <select id="formaPagamento">
                 <option value="PIX">Pix</option>
-                <option value="CARTAO_CREDITO">Cartão de crédito</option>
-                <option value="CARTAO_DEBITO">Cartão de débito</option>
+                <option value="CARTAO_CREDITO">CartÃ£o de crÃ©dito</option>
+                <option value="CARTAO_DEBITO">CartÃ£o de dÃ©bito</option>
                 <option value="BOLETO">Boleto</option>
             </select>
 
-            <label for="observacao">Observação (opcional)</label>
+            <label for="observacao">ObservaÃ§Ã£o (opcional)</label>
             <textarea id="observacao" rows="2" placeholder="Ex: vestido tamanho M, retirada na loja..."></textarea>
 
             <div class="checkout-total">
@@ -157,10 +154,10 @@ async function confirmarPedido() {
     const dados = await resposta.json();
 
     if (!resposta.ok) {
-        alert(dados.erro || "Não foi possível finalizar o pedido");
+        alert(dados.erro || "NÃ£o foi possÃ­vel finalizar o pedido");
         botao.disabled = false;
         botao.textContent = "Confirmar pedido";
-        carregarCheckout(); // atualiza estoque/estado
+        carregarCheckout(); // atualiza estoque
         return;
     }
 
@@ -187,12 +184,12 @@ function mostrarSucesso(pedido, formaPagamento) {
         <div class="checkout-sucesso">
             <i class="bi bi-check-circle"></i>
             <h2>Pedido confirmado!</h2>
-            <p>Obrigado pela compra. Pedido nº ${pedido.idPedido} · status ${pedido.status}.</p>
+            <p>Obrigado pela compra. Pedido nÂº ${pedido.idPedido} Â· status ${pedido.status}.</p>
 
             <div class="sucesso-itens">${itensHtml}</div>
 
             <p class="sucesso-total">Total: <strong>${formatarPreco(pedido.valorTotal)}</strong></p>
-            <p>Pagamento: ${pedido.formaPagamento || formaPagamento || "—"}</p>
+            <p>Pagamento: ${pedido.formaPagamento || formaPagamento || "â€”"}</p>
 
             <div class="sucesso-acoes">
                 <a href="Home.html" class="btn-secundario">Voltar pra Home</a>

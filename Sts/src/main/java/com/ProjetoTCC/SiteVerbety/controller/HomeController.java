@@ -11,14 +11,14 @@ public class HomeController {
     @Autowired
     private HomeConfigService homeConfigService;
 
-    // Leitura publica: a Home usa isso pra montar banner, carrossel e cards.
-    // Cai no anyRequest().permitAll() do SecurityConfig.
+    // usado na Home pra montar banner, carrossel e cards.
+    
     @GetMapping("/api/home")
     public HomeConfigDTO obter() {
         return homeConfigService.obter();
     }
 
-    // Escrita so do admin (o SecurityConfig ja protege /api/admin/**).
+    // Escrita so do admin 
     @PutMapping("/api/admin/home")
     public HomeConfigDTO salvar(@RequestBody HomeConfigDTO dto) {
         return homeConfigService.salvar(dto);

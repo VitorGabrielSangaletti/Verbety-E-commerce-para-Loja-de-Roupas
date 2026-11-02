@@ -1,16 +1,24 @@
-// Tela de Destaques (Verbety).
-// Mostra dois blocos:
-//  - Podio dos mais vendidos (#1, #2, #3): vem de GET /api/produtos/mais-vendidos,
-//    que soma as quantidades vendidas (ignorando o carrinho aberto).
-//  - Vitrine "Selecionados para voce": os produtos marcados como destaque pelo
-//    admin (GET /api/produtos/destaques), com filtro por categoria e ordenacao.
-
-const API = "http://localhost:8080";
+﻿const API = "";
 
 let produtosDestaques = [];
-let vendasPorProduto = {}; // idProduto -> total vendido
+let vendasPorProduto = {}; // idProduto e total vendido
 let categoriaAtual = "";
 let ordenacaoAtual = "relevancia";
+let textoBusca = "";
+
+// deixa o texto minusculo e sem acento, para a busca funcionar melhor
+function normalizar(texto) {
+  return String(texto || "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+}
+
+// usado pela lupa do header
+window.filtrarPorBusca = function (texto) {
+  textoBusca = texto;
+  renderizarGrid();
+};
 
 function formatarPreco(valor) {
   return "R$ " + Number(valor).toFixed(2).replace(".", ",");
@@ -30,7 +38,7 @@ async function carregar() {
   const mensagem = document.getElementById("mensagem");
   try {
     const [rCategorias, rDestaques, rMaisVendidos] = await Promise.all([
-      fetch(API + "/api/categorias", { credentials: "include" }),
+      fetch(API + "/api/categorias", { credentials: "include" }), 
       fetch(API + "/api/produtos/destaques", { credentials: "include" }),
       fetch(API + "/api/produtos/mais-vendidos?limite=100", { credentials: "include" }),
     ]);
@@ -47,7 +55,7 @@ async function carregar() {
     renderizarPodio(maisVendidos.slice(0, 3));
     renderizarGrid();
   } catch (erro) {
-    mensagem.textContent = "Erro de conexão com o servidor.";
+    mensagem.textContent = "Erro de conexÃ£o com o servidor.";
   }
 }
 
@@ -71,16 +79,19 @@ function renderizarPodio(lista) {
   }
 
   podio.innerHTML = lista
-    .map((item, i) => {
+    .map((item) => {
       const p = item.produto;
-      const posicao = i + 1;
       const vendidos = item.totalVendido;
       return `
-        <article class="podio-item ${posicao === 1 ? "primeiro" : ""}" data-id="${p.idProduto}">
-            <span class="podio-posicao">${posicao}º</span>
-            <img src="${imagem(p.imagem)}" alt="${p.nome}" onerror="this.src='${imagem("guest.png")}'">
+        <article class="podio-item" data-id="${p.idProduto}">
+            <div class="podio-imagem">
+                <img src="${imagem(p.imagem)}" alt="${p.nome}" onerror="this.src='${imagem("guest.png")}'">
+                <button type="button" class="btn-sacola" data-add-carrinho="${p.idProduto}" aria-label="Adicionar ${p.nome} ao carrinho">
+                    <i class="bi bi-bag"></i>
+                </button>
+            </div>
             <h4>${p.nome}</h4>
-            <p class="podio-vendas">${vendidos} venda${vendidos > 1 ? "s" : ""}</p>
+            <p class="podio-vendas">${vendidos} vendido${vendidos > 1 ? "s" : ""}</p>
             <strong>${formatarPreco(p.preco)}</strong>
         </article>`;
     })
@@ -106,6 +117,12 @@ function renderizarGrid() {
     );
   }
 
+  // busca pelo nome (lupa do header)
+  if (textoBusca.trim() !== "") {
+    const alvo = normalizar(textoBusca);
+    lista = lista.filter((p) => normalizar(p.nome).includes(alvo));
+  }
+
   // ordenacao
   switch (ordenacaoAtual) {
     case "preco-asc":
@@ -124,7 +141,7 @@ function renderizarGrid() {
       lista.sort((a, b) => b.idProduto - a.idProduto);
       break;
     default:
-      break; // relevancia: mantem a ordem que veio da API
+      break; 
   }
 
   grid.innerHTML = "";
@@ -140,15 +157,22 @@ function renderizarGrid() {
     card.className = "card-produto";
     card.innerHTML = `
         ${estaEsgotado(produto) ? '<span class="badge-esgotado">Esgotado</span>' : ""}
-        <img src="${imagem(produto.imagem)}" alt="${produto.nome}" onerror="this.src='${imagem("guest.png")}'">
+        <div class="card-imagem">
+            <img src="${imagem(produto.imagem)}" class="imagem-1" alt="${produto.nome}" onerror="this.src='${imagem("guest.png")}'">
+            <img src="${imagem(produto.imagem2 || produto.imagem)}" class="imagem-2" alt="${produto.nome}" onerror="this.src='${imagem("guest.png")}'">
+            <button type="button" class="btn-sacola" data-add-carrinho="${produto.idProduto}" aria-label="Adicionar ${produto.nome} ao carrinho">
+                <i class="bi bi-bag"></i>
+            </button>
+        </div>
         <h3>${produto.nome}</h3>
-        <p class="preco">${formatarPreco(produto.preco)}</p>`;
+        <p class="preco">${formatarPreco(produto.preco)}</p>`;      
     card.addEventListener("click", () => {
       window.location.href = "Produto.html?id=" + produto.idProduto;
     });
     grid.appendChild(card);
   });
 }
+
 
 document.getElementById("filtroCategoria").addEventListener("change", (e) => {
   categoriaAtual = e.target.value;

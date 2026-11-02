@@ -1,8 +1,7 @@
-// Tipo de login, tipo cliente, funcionario ou adimin
-const btnCliente = document.getElementById("btnCliente");
+﻿const btnCliente = document.getElementById("btnCliente");
 const btnFuncionario = document.getElementById("btnFuncionario");
 
-let tipoLogin = "USUARIO"; // começa como cliente
+let tipoLogin = "USUARIO"; // comeÃ§a como cliente
 
 btnCliente.addEventListener("click", () => {
   tipoLogin = "USUARIO";
@@ -33,8 +32,8 @@ document
 
     const url =
       tipoLogin === "USUARIO"
-        ? "http://localhost:8080/api/auth/login"
-        : "http://localhost:8080/api/auth/login-admin";
+        ? "/api/auth/login"
+        : "/api/auth/login-admin";
     try {
       const resposta = await fetch(url, {
         method: "POST",
@@ -58,7 +57,7 @@ document
         window.location.href = "Home.html";
       }, 800);
     } catch (error) {
-      mensagem.textContent = "Erro de conexão com o servidor";
+      mensagem.textContent = "Erro de conexÃ£o com o servidor";
       mensagem.classList.add("erro");
     }
   });

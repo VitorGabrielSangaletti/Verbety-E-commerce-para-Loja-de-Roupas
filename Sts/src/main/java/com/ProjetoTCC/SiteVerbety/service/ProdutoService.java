@@ -56,6 +56,16 @@ public class ProdutoService {
 		return produtoRepository.findByDestaqueTrue();
 	}
 
+	// Destaques que aparecem na Home (flag separado da pagina de Destaques)
+	public List<Produto> buscarDestaquesHome() {
+		return produtoRepository.findByDestaqueHomeTrue();
+	}
+
+	// Busca por genero (masculino/feminino/acessorio) usado no header
+	public List<Produto> buscarPorGenero(String genero) {
+		return produtoRepository.findByGeneroIgnoreCase(genero);
+	}
+
 	// Ranking dos mais vendidos (usado na tela de Destaques)
 	public List<ProdutoVendidoDTO> maisVendidos(int limite) {
 		List<ProdutoVendidoDTO> lista = new ArrayList<>();

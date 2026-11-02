@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
-    <title>Carrinho</title>
+    <title>Carrinho | Verbety</title>
     <link rel="stylesheet" href="../css/style.css" />
     <link rel="stylesheet" href="../css/catalogo.css" />
     <link rel="stylesheet" href="../css/nav.css" />
@@ -12,37 +12,37 @@
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet" />
   </head>
   <body>
-        <header class="header">
+        <header class="meu-header">
       <a href="Home.html" class="logo">Verbety</a>
 
       <nav>
         <ul>
-          <li><a class="lv" href="Catalogo.html">Catálogo</a></li>
+          <li><a class="lv" href="Home.html">PÃ¡gina Inicial</a></li>
+          <li><a class="lv" href="Catalogo.html">CatÃ¡logo</a></li>
           <li><a class="lv" href="Destaques.html">Destaques</a></li>
+          <li><a class="lv" href="Catalogo.html?genero=acessorio">AcessÃ³rios</a></li>
         </ul>
       </nav>
 
       <div class="icones">
-        <a href="#" aria-label="Buscar"><i class="bi bi-search"></i></a>
-        <a href="#" aria-label="Lojas"><i class="bi bi-shop"></i></a>
-        <a href="#" aria-label="Favoritos"><i class="bi bi-heart"></i></a>
-        <a href="Login.html" aria-label="Entrar" id="linkConta"><i class="bi bi-person" id="iconeConta"></i></a>
+        <a href="#" id="btnBusca" aria-label="Buscar" aria-expanded="false"><i class="bi bi-search"></i></a>
         <a href="Carrinho.html" aria-label="Carrinho"><i class="bi bi-bag"></i></a>
+        <a href="Login.html" aria-label="Entrar" id="linkConta"><i class="bi bi-person" id="iconeConta"></i></a>
       </div>
     </header>
     
 
     <main class="catalogo-container">
       <h2 class="titulo-pagina">Carrinho</h2>
-      <a href="Catalogo.html" class="btn-voltar">Voltar ao catálogo</a>
+      <a href="Catalogo.html" class="btn-voltar">Voltar ao catÃ¡logo</a>
       <p id="mensagem" class="mensagem"></p>
 
       <div id="itensCarrinho"></div>
       <div id="resumo"></div>
     </main>
 
-<script src="../js/nav-categorias.js"></script>
 <script src="../js/auth.js"></script>
 <script src="../js/carrinho.js"></script>
+    <script src="../js/busca.js"></script>
   </body>
 </html>

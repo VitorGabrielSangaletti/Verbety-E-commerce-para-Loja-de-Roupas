@@ -1,4 +1,4 @@
-const API = "http://localhost:8080";
+﻿const API = "";
 
 let tamanhoSelecionado = null;
 
@@ -15,13 +15,12 @@ async function situacaoLogin() {
     return { logado: true, tipo: dados.tipo };
 }
 
-// admin/funcionario nao compra: avisa em vez de jogar pro login
+// admin/funcionario nao compra e avisa em vez de jogar pro login
 function avisarApenasCliente() {
     alert("Apenas clientes podem comprar. Saia e entre como cliente para adicionar ao carrinho.");
 }
 
-// adiciona 1 unidade do produto/tamanho no carrinho.
-// retorna os dados do carrinho atualizado ou null se deu errado.
+//adiciona no carrinho, retorna o item adicionado ou retorna vazio se der erro
 async function adicionarProduto(produto) {
     const resposta = await fetch(API + "/api/carrinho/itens", {
         method: "POST",
@@ -42,7 +41,7 @@ async function adicionarProduto(produto) {
     const dados = await resposta.json();
 
     if (!resposta.ok) {
-        alert(dados.erro || "Não foi possível adicionar. Verifique o estoque.");
+        alert(dados.erro || "NÃ£o foi possÃ­vel adicionar. Verifique o estoque.");
         return null;
     }
 
@@ -58,7 +57,7 @@ async function carregarProduto() {
 
         // produto nao existe
         if (resposta.status === 404) {
-            mensagem.textContent = "Produto não encontrado.";
+            mensagem.textContent = "Produto nÃ£o encontrado.";
             return;
         }
 
@@ -85,7 +84,7 @@ async function carregarProduto() {
             <div class="info-produto">
                 <h2>${produto.nome}</h2>
                 <p class="preco">R$ ${preco}</p>
-                <p>${produto.descricao || "Sem descrição."}</p>
+                <p>${produto.descricao || "Sem descriÃ§Ã£o."}</p>
 
                 <h4>Tamanhos:</h4>
                 <div class="tamanhos">${botoesTamanho || "<span>Nenhum tamanho cadastrado.</span>"}</div>
@@ -110,20 +109,20 @@ async function carregarProduto() {
             });
         });
 
-        // "Adicionar ao Carrinho": adiciona e continua na pagina
+        // "Adicionar ao Carrinho" adiciona e continua na pagina
         document.getElementById("btnCarrinho").addEventListener("click", async () => {
             if (!tamanhoSelecionado) {
                 alert("Escolha um tamanho");
                 return;
             }
 
-            // visitante nao pode comprar: manda pro login
+            //impede os visitante de comprar e manda pro login
             const situacao = await situacaoLogin();
             if (!situacao.logado) {
                 window.location.href = "Login.html";
                 return;
             }
-            // admin nao compra: avisa e nao redireciona
+            // admin nao compra e avisa com um alerta
             if (situacao.tipo !== "USUARIO") {
                 avisarApenasCliente();
                 return;
@@ -133,8 +132,7 @@ async function carregarProduto() {
             if (resultado) alert("Adicionado ao carrinho!");
         });
 
-        // "Comprar agora": adiciona e abre o checkout direto,
-        // mostrando so esse produto (e as opcoes de compra)
+        // "Comprar agora" adiciona e abre o checkout direto,
         document.getElementById("btnComprar").addEventListener("click", async () => {
             if (!tamanhoSelecionado) {
                 alert("Escolha um tamanho");
@@ -159,7 +157,7 @@ async function carregarProduto() {
         });
 
     } catch (erro) {
-        mensagem.textContent = "Erro de conexão com o servidor";
+        mensagem.textContent = "Erro de conexÃ£o com o servidor";
     }
 }
 

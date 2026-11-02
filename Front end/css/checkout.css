@@ -36,7 +36,7 @@
   color: #fff;
 }
 
-/* itens do pedido reutilizam .cart-item do catalogo.css */
+
 .checkout-itens {
   border-top: 1px solid #ddd;
   margin-top: 10px;

@@ -162,7 +162,7 @@ public class AuthController {
         }
     }
     
-    // Cadastro de cliente (publico, sem login)
+    // Cadastro de cliente 
     @PostMapping("/cadastro-cliente")
     public ResponseEntity<?> cadastroCliente(@RequestBody Usuario usuario) {
         if (usuarioService.emailExiste(usuario.getEmail())) {

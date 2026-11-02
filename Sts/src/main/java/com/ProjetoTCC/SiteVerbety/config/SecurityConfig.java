@@ -1,7 +1,6 @@
 package com.ProjetoTCC.SiteVerbety.config;
 
 import com.ProjetoTCC.SiteVerbety.service.UsuarioDetailsService;
-import com.ProjetoTCC.SiteVerbety.service.FuncionarioDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -17,12 +16,9 @@ import org.springframework.http.HttpMethod;
 public class SecurityConfig {
 
 	private final UsuarioDetailsService usuarioDetailsService;
-	private final FuncionarioDetailsService funcionarioDetailsService;
 
-	public SecurityConfig(UsuarioDetailsService usuarioDetailsService,
-			FuncionarioDetailsService funcionarioDetailsService) {
+	public SecurityConfig(UsuarioDetailsService usuarioDetailsService) {
 		this.usuarioDetailsService = usuarioDetailsService;
-		this.funcionarioDetailsService = funcionarioDetailsService;
 	}
 
 	@Bean
@@ -38,6 +34,8 @@ public class SecurityConfig {
 						// Parte publica: so leitura (GET) de produtos e categorias
 						.requestMatchers(HttpMethod.GET, "/api/categorias", "/api/categorias/**").permitAll()
 						.requestMatchers(HttpMethod.GET, "/api/produtos", "/api/produtos/**").permitAll()
+						// Cadastro de funcionario so pode ser feito por um admin ja logado.
+						.requestMatchers("/api/auth/cadastro-funcionario").hasRole("ADMIN")
 						.requestMatchers("/api/auth/**").permitAll()
 
 						// Parte que o usuario tem que logar

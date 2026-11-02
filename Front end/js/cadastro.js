@@ -1,4 +1,4 @@
-document
+﻿document
   .getElementById("cadastroForm")
   .addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -14,7 +14,7 @@ document
     mensagem.className = "mensagem";
 
     try {
-const resposta = await fetch("http://localhost:8080/api/auth/cadastro-cliente", { method: "POST",
+const resposta = await fetch("/api/auth/cadastro-cliente", { method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
         body: JSON.stringify({ nome, cpf, email, telefone, senha }),
@@ -36,7 +36,7 @@ const resposta = await fetch("http://localhost:8080/api/auth/cadastro-cliente", 
         window.location.href = "Login.html";
       }, 1000);
     } catch (error) {
-      mensagem.textContent = "Erro de conexão com o servidor";
+      mensagem.textContent = "Erro de conexÃ£o com o servidor";
       mensagem.classList.add("erro");
     }
   });

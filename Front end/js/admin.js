@@ -1,10 +1,10 @@
-const API = "http://localhost:8080";
+﻿const API = "";
 
 let editandoId = null;
 let produtosCache = [];
 const TAMANHOS = ["PP", "P", "M", "G", "GG"];
 
-/* ============================ Utilidades ============================ */
+/* ============================ Utilidades ============================ */ 
 
 let toastTimer = null;
 function mostrarToast(mensagem, tipo) {
@@ -35,7 +35,7 @@ async function verificarAdmin() {
     }
 }
 
-/* ============================ Navegação ============================ */
+/* ============================ NavegaÃ§Ã£o ============================ */ 
 
 function ligarMenu() {
     document.querySelectorAll(".menu-item").forEach((botao) => {
@@ -54,7 +54,7 @@ async function carregarCategorias() {
     const resposta = await fetch(API + "/api/categorias", { credentials: "include" });
     const categorias = await resposta.json();
 
-    // select do formulário de produto
+    // select do formulÃ¡rio de produto
     const select = document.getElementById("categoria");
     select.innerHTML = "";
     categorias.forEach((cat) => {
@@ -104,7 +104,7 @@ async function carregarProdutos() {
         tr.innerHTML = `
             <td>${p.idProduto}</td>
             <td><img class="mini-img" src="../images/${p.imagem}" onerror="this.src='../images/guest.png'"></td>
-            <td>${p.nome}${p.destaque ? ' <i class="bi bi-star-fill" style="color:#ffc936"></i>' : ""}</td>
+            <td>${p.nome}${p.destaque ? ' <i class="bi bi-star-fill" style="color:#ffc936" title="Destaques"></i>' : ""}${p.destaqueHome ? ' <i class="bi bi-house-fill" style="color:#555" title="Home"></i>' : ""}</td>
             <td>R$ ${precoBR(p.preco)}</td>
             <td>${tamanhos}</td>
             <td><div class="acoes-tabela">
@@ -126,8 +126,11 @@ async function editarProduto(id) {
     document.getElementById("descricao").value = p.descricao || "";
     document.getElementById("preco").value = p.preco;
     document.getElementById("imagem").value = p.imagem;
+    document.getElementById("imagem2").value = p.imagem2 || "";
     document.getElementById("categoria").value = p.categoria.idCategoria;
+    document.getElementById("genero").value = p.genero || "";
     document.getElementById("destaque").checked = !!p.destaque;
+    document.getElementById("destaqueHome").checked = !!p.destaqueHome;
     document.getElementById("disponivel").checked = !!p.disponivel;
 
     TAMANHOS.forEach((t) => {
@@ -135,7 +138,7 @@ async function editarProduto(id) {
         document.getElementById("qtd_" + t).value = achou ? achou.quantidade : "";
     });
 
-    document.getElementById("btnSalvar").textContent = "Salvar alterações";
+    document.getElementById("btnSalvar").textContent = "Salvar alteraÃ§Ãµes";
     document.getElementById("btnCancelar").style.display = "inline-flex";
     window.scrollTo({ top: 0, behavior: "smooth" });
 }
@@ -162,13 +165,19 @@ function montarTamanhos() {
 document.getElementById("formProduto").addEventListener("submit", async (event) => {
     event.preventDefault();
 
+    const imagem = document.getElementById("imagem").value;
+    const imagem2 = document.getElementById("imagem2").value.trim() || imagem;
+
     const corpo = {
         nome: document.getElementById("nome").value,
         descricao: document.getElementById("descricao").value,
         preco: parseFloat(document.getElementById("preco").value),
-        imagem: document.getElementById("imagem").value,
+        imagem: imagem,
+        imagem2: imagem2,
         disponivel: document.getElementById("disponivel").checked,
         destaque: document.getElementById("destaque").checked,
+        destaqueHome: document.getElementById("destaqueHome").checked,
+        genero: document.getElementById("genero").value || null,
         categoria: { idCategoria: parseInt(document.getElementById("categoria").value) },
         tamanhos: montarTamanhos()
     };
@@ -184,7 +193,7 @@ document.getElementById("formProduto").addEventListener("submit", async (event) 
     });
 
     if (!resposta.ok) {
-        mostrarToast("Erro ao salvar (" + resposta.status + "). Você está logado como funcionário?", "erro");
+        mostrarToast("Erro ao salvar (" + resposta.status + "). VocÃª estÃ¡ logado como funcionÃ¡rio?", "erro");
         return;
     }
 
@@ -206,7 +215,7 @@ async function excluirProduto(id) {
         mostrarToast("Erro ao excluir (" + resposta.status + ").", "erro");
         return;
     }
-    mostrarToast("Produto excluído.");
+    mostrarToast("Produto excluÃ­do.");
     carregarProdutos();
     carregarDestaquesAdmin();
 }
@@ -237,7 +246,7 @@ document.getElementById("formCategoria").addEventListener("submit", async (event
 });
 
 async function excluirCategoria(id) {
-    if (!confirm("Excluir a categoria #" + id + "?\nSó funciona se não houver produtos ligados a ela.")) return;
+    if (!confirm("Excluir a categoria #" + id + "?\nSÃ³ funciona se nÃ£o houver produtos ligados a ela.")) return;
 
     const resposta = await fetch(API + "/api/categorias/" + id, {
         method: "DELETE",
@@ -245,10 +254,10 @@ async function excluirCategoria(id) {
     });
 
     if (!resposta.ok) {
-        mostrarToast("Não foi possível excluir (talvez tenha produtos nela).", "erro");
+        mostrarToast("NÃ£o foi possÃ­vel excluir (talvez tenha produtos nela).", "erro");
         return;
     }
-    mostrarToast("Categoria excluída.");
+    mostrarToast("Categoria excluÃ­da.");
     carregarCategorias();
 }
 
@@ -257,7 +266,7 @@ async function excluirCategoria(id) {
 async function carregarHome() {
     const resposta = await fetch(API + "/api/home", { credentials: "include" });
     if (!resposta.ok) {
-        mostrarToast("Não foi possível carregar a configuração da Home.", "erro");
+        mostrarToast("NÃ£o foi possÃ­vel carregar a configuraÃ§Ã£o da Home.", "erro");
         return;
     }
     const cfg = await resposta.json();
@@ -316,21 +325,27 @@ async function carregarDestaquesAdmin() {
     }
 
     produtos.forEach((p) => {
-        const item = document.createElement("label");
+        const item = document.createElement("div");
         item.className = "destaque-item";
         item.innerHTML = `
             <img src="../images/${p.imagem}" onerror="this.src='../images/guest.png'">
             <span class="nome-produto">${p.nome}</span>
-            <input type="checkbox" ${p.destaque ? "checked" : ""} data-id="${p.idProduto}">
+            <span class="destaque-opcoes">
+                <label class="check"><input type="checkbox" data-tipo="home" ${p.destaqueHome ? "checked" : ""}> Home</label>
+                <label class="check"><input type="checkbox" data-tipo="destaques" ${p.destaque ? "checked" : ""}> Destaques</label>
+            </span>
         `;
-        const check = item.querySelector("input");
-        check.addEventListener("change", () => alternarDestaque(p, check));
+        item.querySelectorAll('input[type="checkbox"]').forEach((check) => {
+            check.addEventListener("change", () => alternarDestaque(p, check));
+        });
         container.appendChild(item);
     });
 }
 
 async function alternarDestaque(produto, checkbox) {
-    const original = !!produto.destaque;
+    const tipo = checkbox.dataset.tipo; // "home" ou "destaques"
+    const campo = tipo === "home" ? "destaqueHome" : "destaque";
+    const original = !!produto[campo];
     const novo = checkbox.checked;
 
     const corpo = {
@@ -338,11 +353,15 @@ async function alternarDestaque(produto, checkbox) {
         descricao: produto.descricao,
         preco: produto.preco,
         imagem: produto.imagem,
+        imagem2: produto.imagem2,
         disponivel: produto.disponivel,
-        destaque: novo,
+        destaque: produto.destaque,
+        destaqueHome: produto.destaqueHome,
+        genero: produto.genero,
         categoria: produto.categoria,
         tamanhos: produto.tamanhos
     };
+    corpo[campo] = novo;
 
     const resposta = await fetch(API + "/api/produtos/" + produto.idProduto, {
         method: "PUT",
@@ -356,12 +375,16 @@ async function alternarDestaque(produto, checkbox) {
         mostrarToast("Erro ao atualizar destaque (" + resposta.status + ").", "erro");
         return;
     }
-    produto.destaque = novo;
-    mostrarToast(novo ? "Produto marcado como destaque." : "Produto removido dos destaques.");
+    produto[campo] = novo;
+    mostrarToast(
+        tipo === "home"
+            ? (novo ? "Adicionado Ã  Home." : "Removido da Home.")
+            : (novo ? "Adicionado aos Destaques." : "Removido dos Destaques.")
+    );
     carregarProdutos();
 }
 
-/* ============================ Ações da tabela (delegação) ============================ */
+/* ============================ AÃ§Ãµes da tabela  ============================ */
 
 document.getElementById("listaProdutos").addEventListener("click", (event) => {
     const botao = event.target.closest("button[data-acao]");
@@ -376,7 +399,57 @@ document.getElementById("listaCategorias").addEventListener("click", (event) => 
     if (botao) excluirCategoria(parseInt(botao.dataset.id));
 });
 
-/* ============================ Início ============================ */
+/* ============================ Dashboard ============================ */
+
+async function carregarDashboard() {
+    try {
+        const resposta = await fetch(API + "/api/admin/dashboard", { credentials: "include" });
+        if (!resposta.ok) throw new Error("HTTP " + resposta.status);
+        const dados = await resposta.json();
+
+        document.getElementById("dashFaturamento").textContent = "R$ " + precoBR(dados.faturamentoTotal);
+        document.getElementById("dashPedidos").textContent = dados.totalPedidos;
+        document.getElementById("dashItens").textContent = dados.itensVendidos;
+
+        // tabela dos mais vendidos
+        const tbody = document.getElementById("dashMaisVendidos");
+        tbody.innerHTML = "";
+        if (!dados.maisVendidos || dados.maisVendidos.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="4">Nenhuma venda registrada ainda.</td></tr>';
+        } else {
+            dados.maisVendidos.forEach((item, indice) => {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td>${indice + 1}</td>
+                    <td>${item.produto.nome}</td>
+                    <td>${item.totalVendido}</td>
+                    <td>R$ ${precoBR(item.produto.preco)}</td>`;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // tabela de estoque baixo
+        const tbodyEstoque = document.getElementById("dashEstoque");
+        tbodyEstoque.innerHTML = "";
+        if (!dados.estoqueBaixo || dados.estoqueBaixo.length === 0) {
+            tbodyEstoque.innerHTML = '<tr><td colspan="2">Nenhum produto com estoque baixo.</td></tr>';
+        } else {
+            dados.estoqueBaixo.forEach((item) => {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `<td>${item.nome}</td><td>${item.estoque}</td>`;
+                tbodyEstoque.appendChild(tr);
+            });
+        }
+    } catch (erro) {
+        console.log("[dashboard] erro:", erro.message);
+        document.getElementById("dashMaisVendidos").innerHTML =
+            '<tr><td colspan="4">NÃ£o foi possÃ­vel carregar o dashboard.</td></tr>';
+        document.getElementById("dashEstoque").innerHTML =
+            '<tr><td colspan="2">NÃ£o foi possÃ­vel carregar o dashboard.</td></tr>';
+    }
+}
+
+/* ============================ InÃ­cio ============================ */
 
 async function iniciar() {
     if (!(await verificarAdmin())) return;
@@ -385,6 +458,7 @@ async function iniciar() {
     document.getElementById("painelAdmin").style.display = "block";
 
     ligarMenu();
+    carregarDashboard();
     await carregarCategorias();
     carregarProdutos();
     carregarHome();
