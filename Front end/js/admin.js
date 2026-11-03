@@ -35,7 +35,7 @@ async function verificarAdmin() {
     }
 }
 
-/* ============================ NavegaÃ§Ã£o ============================ */ 
+/* ============================ Navegação ============================ */ 
 
 function ligarMenu() {
     document.querySelectorAll(".menu-item").forEach((botao) => {
@@ -54,7 +54,7 @@ async function carregarCategorias() {
     const resposta = await fetch(API + "/api/categorias", { credentials: "include" });
     const categorias = await resposta.json();
 
-    // select do formulÃ¡rio de produto
+    // select do formulário de produto
     const select = document.getElementById("categoria");
     select.innerHTML = "";
     categorias.forEach((cat) => {
@@ -138,7 +138,7 @@ async function editarProduto(id) {
         document.getElementById("qtd_" + t).value = achou ? achou.quantidade : "";
     });
 
-    document.getElementById("btnSalvar").textContent = "Salvar alteraÃ§Ãµes";
+    document.getElementById("btnSalvar").textContent = "Salvar alterações";
     document.getElementById("btnCancelar").style.display = "inline-flex";
     window.scrollTo({ top: 0, behavior: "smooth" });
 }
@@ -193,7 +193,7 @@ document.getElementById("formProduto").addEventListener("submit", async (event) 
     });
 
     if (!resposta.ok) {
-        mostrarToast("Erro ao salvar (" + resposta.status + "). VocÃª estÃ¡ logado como funcionÃ¡rio?", "erro");
+        mostrarToast("Erro ao salvar (" + resposta.status + "). Você está logado como funcionário?", "erro");
         return;
     }
 
@@ -215,7 +215,7 @@ async function excluirProduto(id) {
         mostrarToast("Erro ao excluir (" + resposta.status + ").", "erro");
         return;
     }
-    mostrarToast("Produto excluÃ­do.");
+    mostrarToast("Produto excluído.");
     carregarProdutos();
     carregarDestaquesAdmin();
 }
@@ -246,7 +246,7 @@ document.getElementById("formCategoria").addEventListener("submit", async (event
 });
 
 async function excluirCategoria(id) {
-    if (!confirm("Excluir a categoria #" + id + "?\nSÃ³ funciona se nÃ£o houver produtos ligados a ela.")) return;
+    if (!confirm("Excluir a categoria #" + id + "?\nSó funciona se não houver produtos ligados a ela.")) return;
 
     const resposta = await fetch(API + "/api/categorias/" + id, {
         method: "DELETE",
@@ -254,10 +254,10 @@ async function excluirCategoria(id) {
     });
 
     if (!resposta.ok) {
-        mostrarToast("NÃ£o foi possÃ­vel excluir (talvez tenha produtos nela).", "erro");
+        mostrarToast("Não foi possível excluir (talvez tenha produtos nela).", "erro");
         return;
     }
-    mostrarToast("Categoria excluÃ­da.");
+    mostrarToast("Categoria excluída.");
     carregarCategorias();
 }
 
@@ -266,7 +266,7 @@ async function excluirCategoria(id) {
 async function carregarHome() {
     const resposta = await fetch(API + "/api/home", { credentials: "include" });
     if (!resposta.ok) {
-        mostrarToast("NÃ£o foi possÃ­vel carregar a configuraÃ§Ã£o da Home.", "erro");
+        mostrarToast("Não foi possível carregar a configuração da Home.", "erro");
         return;
     }
     const cfg = await resposta.json();
@@ -378,13 +378,13 @@ async function alternarDestaque(produto, checkbox) {
     produto[campo] = novo;
     mostrarToast(
         tipo === "home"
-            ? (novo ? "Adicionado Ã  Home." : "Removido da Home.")
+            ? (novo ? "Adicionado à Home." : "Removido da Home.")
             : (novo ? "Adicionado aos Destaques." : "Removido dos Destaques.")
     );
     carregarProdutos();
 }
 
-/* ============================ AÃ§Ãµes da tabela  ============================ */
+/* ============================ Ações da tabela  ============================ */
 
 document.getElementById("listaProdutos").addEventListener("click", (event) => {
     const botao = event.target.closest("button[data-acao]");
@@ -443,13 +443,13 @@ async function carregarDashboard() {
     } catch (erro) {
         console.log("[dashboard] erro:", erro.message);
         document.getElementById("dashMaisVendidos").innerHTML =
-            '<tr><td colspan="4">NÃ£o foi possÃ­vel carregar o dashboard.</td></tr>';
+            '<tr><td colspan="4">Não foi possível carregar o dashboard.</td></tr>';
         document.getElementById("dashEstoque").innerHTML =
-            '<tr><td colspan="2">NÃ£o foi possÃ­vel carregar o dashboard.</td></tr>';
+            '<tr><td colspan="2">Não foi possível carregar o dashboard.</td></tr>';
     }
 }
 
-/* ============================ InÃ­cio ============================ */
+/* ============================ Início ============================ */
 
 async function iniciar() {
     if (!(await verificarAdmin())) return;

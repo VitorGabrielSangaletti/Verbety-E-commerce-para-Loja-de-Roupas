@@ -11,7 +11,7 @@ async function carregarCarrinho() {
 
     const resposta = await fetch(API + "/api/carrinho", { credentials: "include" });
 
-    // Se o admin tentar adicionar algo ao carrinho, ele Ã© mandado pro login porque sÃ³ cliente pode comprar
+    // Se o admin tentar adicionar algo ao carrinho, ele é mandado pro login porque só cliente pode comprar
     if (resposta.status === 401) {
         const me = await fetch(API + "/api/auth/me", { credentials: "include" })
             .then(r => r.json()).catch(() => ({}));
@@ -31,7 +31,7 @@ async function carregarCarrinho() {
     if (itens.length === 0) {
         container.innerHTML = "";
         resumo.innerHTML = "";
-        mensagem.textContent = "Seu carrinho estÃ¡ vazio.";
+        mensagem.textContent = "Seu carrinho está vazio.";
         return;
     }
     mensagem.textContent = "";
@@ -43,7 +43,7 @@ async function carregarCarrinho() {
             <div class="cart-item-info">
                 <h3>${item.produto.nome}</h3>
                 <p>Tamanho: ${item.tamanho}</p>
-                <p>PreÃ§o: ${formatarPreco(item.precoUnidade)}</p>
+                <p>Preço: ${formatarPreco(item.precoUnidade)}</p>
             </div>
             <input type="number" class="cart-qtd" value="${item.quantidade}" min="1">
             <p class="cart-subtotal">${formatarPreco(item.subtotal)}</p>

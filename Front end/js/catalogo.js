@@ -94,7 +94,7 @@ window.filtrarPorBusca = function (texto) {
 const TITULOS_GENERO = {
   masculino: "MASCULINO",
   feminino: "FEMININO",
-  acessorio: "ACESSÃ“RIOS",
+  acessorio: "ACESSÓRIOS",
 };
 
 let tituloCategoria = "";
@@ -105,7 +105,7 @@ function atualizarTitulo() {
   if (!titulo) return;
   titulo.textContent = tituloCategoria
     ? tituloCategoria.toUpperCase()
-    : TITULOS_GENERO[normalizar(generoAtual)] || "CATÃLOGO";
+    : TITULOS_GENERO[normalizar(generoAtual)] || "CATÁLOGO";
 }
 
 function marcarBotaoAtivo() {

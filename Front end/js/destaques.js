@@ -55,7 +55,7 @@ async function carregar() {
     renderizarPodio(maisVendidos.slice(0, 3));
     renderizarGrid();
   } catch (erro) {
-    mensagem.textContent = "Erro de conexÃ£o com o servidor.";
+    mensagem.textContent = "Erro de conexão com o servidor.";
   }
 }
 

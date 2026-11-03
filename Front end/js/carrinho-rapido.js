@@ -1,4 +1,4 @@
-﻿// Adiciona ao carrinho direto dos cards de produto (Home, CatÃ¡logo e Destaques)
+﻿// Adiciona ao carrinho direto dos cards de produto (Home, Catálogo e Destaques)
 (() => {
   const API = "";
   const cache = {};
@@ -70,13 +70,13 @@
 
       const dados = await resposta.json().catch(() => ({}));
       if (!resposta.ok) {
-        mostrarToast(dados.erro || "NÃ£o foi possÃ­vel adicionar ao carrinho.");
+        mostrarToast(dados.erro || "Não foi possível adicionar ao carrinho.");
         return;
       }
 
       mostrarToast(produto.nome + " adicionado ao carrinho!");
     } catch (erro) {
-      mostrarToast("Erro de conexÃ£o com o servidor.");
+      mostrarToast("Erro de conexão com o servidor.");
     }
   }
 
@@ -97,7 +97,7 @@
       try {
         const produto = await buscarProduto(botao.dataset.addCarrinho);
         if (!produto) {
-          mostrarToast("Produto nÃ£o encontrado.");
+          mostrarToast("Produto não encontrado.");
           return;
         }
         await adicionar(produto);

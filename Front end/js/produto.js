@@ -41,7 +41,7 @@ async function adicionarProduto(produto) {
     const dados = await resposta.json();
 
     if (!resposta.ok) {
-        alert(dados.erro || "NÃ£o foi possÃ­vel adicionar. Verifique o estoque.");
+        alert(dados.erro || "Não foi possível adicionar. Verifique o estoque.");
         return null;
     }
 
@@ -57,7 +57,7 @@ async function carregarProduto() {
 
         // produto nao existe
         if (resposta.status === 404) {
-            mensagem.textContent = "Produto nÃ£o encontrado.";
+            mensagem.textContent = "Produto não encontrado.";
             return;
         }
 
@@ -84,7 +84,7 @@ async function carregarProduto() {
             <div class="info-produto">
                 <h2>${produto.nome}</h2>
                 <p class="preco">R$ ${preco}</p>
-                <p>${produto.descricao || "Sem descriÃ§Ã£o."}</p>
+                <p>${produto.descricao || "Sem descrição."}</p>
 
                 <h4>Tamanhos:</h4>
                 <div class="tamanhos">${botoesTamanho || "<span>Nenhum tamanho cadastrado.</span>"}</div>
@@ -157,7 +157,7 @@ async function carregarProduto() {
         });
 
     } catch (erro) {
-        mensagem.textContent = "Erro de conexÃ£o com o servidor";
+        mensagem.textContent = "Erro de conexão com o servidor";
     }
 }
 

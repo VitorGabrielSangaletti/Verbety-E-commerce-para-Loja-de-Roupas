@@ -52,7 +52,7 @@ async function carregarCheckout() {
         conteudo.innerHTML = `
             <div class="checkout-vazio">
                 <p>Nenhum produto selecionado para a compra.</p>
-                <p><a href="Carrinho.html">Voltar para o carrinho</a> Â· <a href="Catalogo.html">Ver catÃ¡logo</a></p>
+                <p><a href="Carrinho.html">Voltar para o carrinho</a> · <a href="Catalogo.html">Ver catálogo</a></p>
             </div>`;
         return;
     }
@@ -63,7 +63,7 @@ async function carregarCheckout() {
             <div class="cart-item-info">
                 <h3>${item.produto.nome}</h3>
                 <p>Tamanho: ${item.tamanho}</p>
-                <p>PreÃ§o: ${formatarPreco(item.precoUnidade)}</p>
+                <p>Preço: ${formatarPreco(item.precoUnidade)}</p>
             </div>
             <input type="number" class="cart-qtd" value="${item.quantidade}" min="1">
             <p class="cart-subtotal">${formatarPreco(item.subtotal)}</p>
@@ -80,12 +80,12 @@ async function carregarCheckout() {
             <label for="formaPagamento">Forma de pagamento</label>
             <select id="formaPagamento">
                 <option value="PIX">Pix</option>
-                <option value="CARTAO_CREDITO">CartÃ£o de crÃ©dito</option>
-                <option value="CARTAO_DEBITO">CartÃ£o de dÃ©bito</option>
+                <option value="CARTAO_CREDITO">Cartão de crédito</option>
+                <option value="CARTAO_DEBITO">Cartão de débito</option>
                 <option value="BOLETO">Boleto</option>
             </select>
 
-            <label for="observacao">ObservaÃ§Ã£o (opcional)</label>
+            <label for="observacao">Observação (opcional)</label>
             <textarea id="observacao" rows="2" placeholder="Ex: vestido tamanho M, retirada na loja..."></textarea>
 
             <div class="checkout-total">
@@ -154,7 +154,7 @@ async function confirmarPedido() {
     const dados = await resposta.json();
 
     if (!resposta.ok) {
-        alert(dados.erro || "NÃ£o foi possÃ­vel finalizar o pedido");
+        alert(dados.erro || "Não foi possível finalizar o pedido");
         botao.disabled = false;
         botao.textContent = "Confirmar pedido";
         carregarCheckout(); // atualiza estoque
@@ -184,12 +184,12 @@ function mostrarSucesso(pedido, formaPagamento) {
         <div class="checkout-sucesso">
             <i class="bi bi-check-circle"></i>
             <h2>Pedido confirmado!</h2>
-            <p>Obrigado pela compra. Pedido nÂº ${pedido.idPedido} Â· status ${pedido.status}.</p>
+            <p>Obrigado pela compra. Pedido nº ${pedido.idPedido} · status ${pedido.status}.</p>
 
             <div class="sucesso-itens">${itensHtml}</div>
 
             <p class="sucesso-total">Total: <strong>${formatarPreco(pedido.valorTotal)}</strong></p>
-            <p>Pagamento: ${pedido.formaPagamento || formaPagamento || "â€”"}</p>
+            <p>Pagamento: ${pedido.formaPagamento || formaPagamento || "—"}</p>
 
             <div class="sucesso-acoes">
                 <a href="Home.html" class="btn-secundario">Voltar pra Home</a>

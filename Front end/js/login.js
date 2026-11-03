@@ -1,7 +1,7 @@
 ﻿const btnCliente = document.getElementById("btnCliente");
 const btnFuncionario = document.getElementById("btnFuncionario");
 
-let tipoLogin = "USUARIO"; // comeÃ§a como cliente
+let tipoLogin = "USUARIO"; // começa como cliente
 
 btnCliente.addEventListener("click", () => {
   tipoLogin = "USUARIO";
@@ -57,7 +57,7 @@ document
         window.location.href = "Home.html";
       }, 800);
     } catch (error) {
-      mensagem.textContent = "Erro de conexÃ£o com o servidor";
+      mensagem.textContent = "Erro de conexão com o servidor";
       mensagem.classList.add("erro");
     }
   });

@@ -36,7 +36,7 @@ const resposta = await fetch("/api/auth/cadastro-cliente", { method: "POST",
         window.location.href = "Login.html";
       }, 1000);
     } catch (error) {
-      mensagem.textContent = "Erro de conexÃ£o com o servidor";
+      mensagem.textContent = "Erro de conexão com o servidor";
       mensagem.classList.add("erro");
     }
   });
