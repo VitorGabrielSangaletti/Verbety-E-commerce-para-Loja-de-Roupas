@@ -369,7 +369,7 @@ body {
   font-size: 20px;
 }
 
-/*------------------Pagina do produto: botoes de compra------------------*/
+/*------------------ botoes de compra da pagina dos produtos------------------*/
 
 .acoes-produto {
   display: flex;
@@ -407,7 +407,7 @@ body {
   cursor: not-allowed;
 }
 
-/*------------------Pagina do produto: novo layout------------------*/
+/*------------------Pagina do produto------------------*/
 
 .produto-detalhes {
   display: grid;
@@ -698,7 +698,7 @@ body {
 
 .hero {
   height: 200px;
-  background-image: url("../images/ceu.jpg");
+  background-image: url("../images/golden.jpg");
   background-size: 100% auto;
   background-attachment: fixed;
   background-position: center;
@@ -721,6 +721,7 @@ body {
 .conteudo h1 {
   font-size: 24px;
   margin-bottom: 25px;
+  color: white;
 }
 
 .cards2 {
@@ -736,20 +737,20 @@ body {
 .cards2 h2 {
   font-size: 24px;
   margin-bottom: 8px;
-  color: #000;
+  color: white;
 }
 
 .cards2 h1 {
   font-size: 35px;
   line-height: 1.5;
-  color: #000;
+  color: white;
   font-weight: bolder;
 }
 
 .cards2 p {
   font-size: 15px;
   line-height: 1.5;
-  color: #000;
+  color: white;
   font-weight: bolder;
 }
 

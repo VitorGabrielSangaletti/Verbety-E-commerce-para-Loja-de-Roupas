@@ -779,7 +779,7 @@ main {
 
 .hero {
   height: 350px;
-  background-image: url("../images/ceu.jpg");
+  background-image: url("../images/golden.jpg");
   background-size: 100% auto;
   background-attachment: fixed;
   background-position: center;
@@ -800,6 +800,7 @@ main {
 .conteudo h1 {
   font-size: 24px;
   margin-bottom: 25px;
+  color: white;
 }
 
 .cards {
@@ -816,12 +817,13 @@ main {
   font-size: 24px;
   margin-bottom: 8px;
   color: #000;
+  color: white;
 }
 
 .cards p {
   font-size: 16px;
   line-height: 1.5;
-  color: #000;
+  color: #ffffff;
 }
 
 .espaco {
@@ -830,7 +832,7 @@ main {
   text-align: center;
 }
 
-/*------------------------------------------------------------Responsivo (mobile)----------------------------------------------------------*/
+/*------------------------------------------------------------Responsivo pra celular----------------------------------------------------------*/
 
 @media (max-width: 900px) {
   .lista-produtos {
