@@ -100,6 +100,7 @@ CREATE TABLE IF NOT EXISTS pedido (
     status VARCHAR(50) DEFAULT NULL,
     forma_pagamento VARCHAR(20) DEFAULT NULL,
     observacao TEXT,
+    data_retirada DATE DEFAULT NULL,
     PRIMARY KEY (id_pedido),
     KEY id_usuario (id_usuario),
     CONSTRAINT fk_pedido_usuario

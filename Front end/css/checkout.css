@@ -26,7 +26,7 @@
   border: 1px solid #000;
   background: #fff;
   padding: 9px 16px;
-  border-radius: 6px;
+  border-radius: 0;
   cursor: pointer;
   transition: background 0.2s, color 0.2s;
 }
@@ -75,6 +75,100 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/*------------------Observação + retirada------------------*/
+
+.checkout-extra {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  margin-top: 16px;
+  align-items: start;
+}
+
+.checkout-observacao textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+.checkout-retirada {
+  border: 1px solid #e5ddd3;
+  background: #fff;
+  padding: 16px;
+}
+
+.loja-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: #777;
+}
+
+.loja-status__ponto {
+  width: 9px;
+  height: 9px;
+  flex: 0 0 9px;
+  background: #999;
+}
+
+.loja-status.aberta {
+  color: #188038;
+}
+
+.loja-status.aberta .loja-status__ponto {
+  background: #188038;
+}
+
+.loja-status.fechada {
+  color: #b00020;
+}
+
+.loja-status.fechada .loja-status__ponto {
+  background: #b00020;
+}
+
+.loja-horario {
+  margin: 8px 0 16px;
+  font-size: 13px;
+  color: #555;
+}
+
+.loja-horario strong {
+  color: #111;
+}
+
+.checkout-retirada input[type="date"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #c9b8a8;
+  background: #fff;
+  font-family: inherit;
+  font-size: 14px;
+  box-sizing: border-box;
+  border-radius: 0;
+}
+
+.obrigatorio {
+  color: #b00020;
+}
+
+.loja-dica {
+  display: block;
+  margin-top: 8px;
+  font-size: 12px;
+  line-height: 1.45;
+  color: #777;
+}
+
+@media (max-width: 700px) {
+  .checkout-extra {
+    grid-template-columns: 1fr;
+  }
+}
+
 .checkout-total {
   display: flex;
   justify-content: space-between;
@@ -104,7 +198,7 @@
   font-family: inherit;
   cursor: pointer;
   text-align: center;
-  border-radius: 8px;
+  border-radius: 0;
   text-decoration: none;
   transition: opacity 0.2s, background 0.2s, color 0.2s;
 }

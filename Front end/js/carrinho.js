@@ -83,7 +83,7 @@ async function carregarCarrinho() {
             });
             const dados = await resposta.json();
             if (!resposta.ok) {
-                alert(dados.erro || "Erro ao atualizar quantidade");
+                UI.alerta(dados.erro || "Erro ao atualizar quantidade", { tipo: "erro" });
             }
             carregarCarrinho();
         });
@@ -119,7 +119,7 @@ async function carregarCarrinho() {
         const selecionados = Array.from(document.querySelectorAll(".cart-selecao:checked"))
             .map(chk => chk.closest(".cart-item").dataset.id);
         if (selecionados.length === 0) {
-            alert("Marque ao menos um produto para comprar.");
+            UI.alerta("Marque ao menos um produto para comprar.", { tipo: "aviso" });
             return;
         }
         window.location.href = "Checkout.html?itens=" + selecionados.join(",");

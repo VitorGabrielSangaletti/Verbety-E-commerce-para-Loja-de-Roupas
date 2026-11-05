@@ -14,7 +14,7 @@ function normalizar(texto) {
     .replace(/[\u0300-\u036f]/g, "");
 }
 
-// usado pela lupa do header
+// usado pela barra de busca
 window.filtrarPorBusca = function (texto) {
   textoBusca = texto;
   renderizarGrid();

@@ -1,7 +1,3 @@
-// Busca do header: a lupa abre um campo que filtra os produtos da pagina.
-// Se a pagina atual nao tiver lista de produtos (home, produto, carrinho...),
-// o Enter leva para o catalogo ja com a busca aplicada.
-
 (function () {
   const botao = document.getElementById("btnBusca");
   const header = document.querySelector("header");

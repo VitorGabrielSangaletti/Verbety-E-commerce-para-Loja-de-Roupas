@@ -138,24 +138,6 @@ body {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .card-produto h3 {
 	font-size: 15px;
 	padding-top:10px ;
@@ -405,7 +387,7 @@ body {
   font-weight: 700;
   cursor: pointer;
   text-align: center;
-  border-radius: 8px;
+  border-radius: 0;
   font-family: inherit;
   background: #fff;
   color: #000;

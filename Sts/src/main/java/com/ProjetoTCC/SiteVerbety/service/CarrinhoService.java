@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -141,7 +142,8 @@ public class CarrinhoService {
 
     // finaliza a compra, confere o estoque de novo, debita e fecha o pedido
     // idsSelecionados (opcional): compra so esses itens; se for null compra o carrinho todo
-    public Pedido finalizar(Usuario usuario, String formaPagamento, String observacao, List<Long> idsSelecionados) {
+    public Pedido finalizar(Usuario usuario, String formaPagamento, String observacao,
+            LocalDate dataRetirada, List<Long> idsSelecionados) {
         Pedido carrinho = buscarOuCriarCarrinho(usuario);
         List<ItemPedido> itens = itensDoPedido(carrinho.getIdPedido());
 
@@ -190,6 +192,7 @@ public class CarrinhoService {
             carrinho.setStatus("RECEBIDO");
             carrinho.setFormaPagamento(formaPagamento);
             carrinho.setObservacao(observacao);
+            carrinho.setDataRetirada(dataRetirada);
             pedidoFinal = pedidoRepository.save(carrinho);
         } else {
             // compra parcial: cria um pedido novo e move so os itens comprados pra ele
@@ -199,6 +202,7 @@ public class CarrinhoService {
             novo.setStatus("RECEBIDO");
             novo.setFormaPagamento(formaPagamento);
             novo.setObservacao(observacao);
+            novo.setDataRetirada(dataRetirada);
             novo.setValorTotal(BigDecimal.ZERO);
             novo = pedidoRepository.save(novo);
 

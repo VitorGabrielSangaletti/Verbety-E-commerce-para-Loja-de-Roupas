@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +29,8 @@ public class CarrinhoController {
         resposta.put("idPedido", carrinho.getIdPedido());
         resposta.put("status", carrinho.getStatus());
         resposta.put("valorTotal", carrinho.getValorTotal());
+        resposta.put("formaPagamento", carrinho.getFormaPagamento());
+        resposta.put("dataRetirada", carrinho.getDataRetirada());
         resposta.put("itens", carrinhoService.itensDoPedido(carrinho.getIdPedido()).stream()
                 .map(this::itemResposta)
                 .toList());
@@ -128,6 +133,24 @@ public class CarrinhoController {
                 ? body.get("formaPagamento").toString() : null;
         String observacao = body != null && body.get("observacao") != null
                 ? body.get("observacao").toString() : null;
+
+        // data de retirada: obrigatoria e nunca no passado (horario de Brasilia)
+        String dataRetiradaTexto = body != null && body.get("dataRetirada") != null
+                ? body.get("dataRetirada").toString().trim() : null;
+        if (dataRetiradaTexto == null || dataRetiradaTexto.isEmpty()) {
+            return ResponseEntity.badRequest().body(Map.of("erro", "Informe a data de retirada"));
+        }
+        LocalDate dataRetirada;
+        try {
+            dataRetirada = LocalDate.parse(dataRetiradaTexto);
+        } catch (DateTimeParseException e) {
+            return ResponseEntity.badRequest().body(Map.of("erro", "Data de retirada inv\u00e1lida"));
+        }
+        LocalDate hoje = LocalDate.now(ZoneId.of("America/Sao_Paulo"));
+        if (dataRetirada.isBefore(hoje)) {
+            return ResponseEntity.badRequest().body(Map.of("erro", "A data de retirada n\u00e3o pode ser no passado"));
+        }
+
         List<Long> idsSelecionados = null;
         if (body != null && body.get("itens") != null) {
             idsSelecionados = ((List<?>) body.get("itens")).stream()
@@ -135,7 +158,7 @@ public class CarrinhoController {
                     .toList();
         }
         try {
-            Pedido carrinho = carrinhoService.finalizar(usuario, formaPagamento, observacao, idsSelecionados);
+            Pedido carrinho = carrinhoService.finalizar(usuario, formaPagamento, observacao, dataRetirada, idsSelecionados);
             return ResponseEntity.ok(resposta(carrinho));
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(Map.of("erro", e.getMessage()));

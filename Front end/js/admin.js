@@ -4,8 +4,8 @@ let editandoId = null;
 let produtosCache = [];
 const TAMANHOS = ["PP", "P", "M", "G", "GG"];
 
-/* ============================ Utilidades ============================ */ 
-
+/* ============================ Utilidades ============================ */  
+//mostra menssagens de erro ou sucesso na canto inferior da tela
 let toastTimer = null;
 function mostrarToast(mensagem, tipo) {
     const toast = document.getElementById("toast");
@@ -204,7 +204,12 @@ document.getElementById("formProduto").addEventListener("submit", async (event) 
 });
 
 async function excluirProduto(id) {
-    if (!confirm("Excluir o produto #" + id + "?")) return;
+    const confirmado = await UI.confirmar("Excluir o produto #" + id + "?", {
+        tipo: "confirmacao",
+        textoOk: "Excluir",
+        perigo: true
+    });
+    if (!confirmado) return;
 
     const resposta = await fetch(API + "/api/produtos/" + id, {
         method: "DELETE",
@@ -246,7 +251,11 @@ document.getElementById("formCategoria").addEventListener("submit", async (event
 });
 
 async function excluirCategoria(id) {
-    if (!confirm("Excluir a categoria #" + id + "?\nSó funciona se não houver produtos ligados a ela.")) return;
+    const confirmado = await UI.confirmar(
+        "Excluir a categoria #" + id + "?\nSó funciona se não houver produtos ligados a ela.",
+        { tipo: "confirmacao", textoOk: "Excluir", perigo: true }
+    );
+    if (!confirmado) return;
 
     const resposta = await fetch(API + "/api/categorias/" + id, {
         method: "DELETE",

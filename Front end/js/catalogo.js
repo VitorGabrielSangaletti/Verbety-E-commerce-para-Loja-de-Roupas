@@ -67,7 +67,7 @@ function renderizar(produtos) {
   });
 }
 
-// aplica genero + busca em cima da lista completa
+// aplica genero e busca em cima da lista 
 function aplicarFiltros() {
   let lista = [...todosProdutos];
 
@@ -85,7 +85,7 @@ function aplicarFiltros() {
   renderizar(lista);
 }
 
-// usado pela lupa do header
+// parte pra barra de busca
 window.filtrarPorBusca = function (texto) {
   textoBusca = texto;
   aplicarFiltros();
@@ -109,15 +109,8 @@ function atualizarTitulo() {
 }
 
 function marcarBotaoAtivo() {
-  const acessorio = normalizar(generoAtual) === "acessorio";
-
   document.querySelectorAll(".btn-filtro").forEach((botao) => {
     const genero = normalizar(botao.dataset.genero);
-    // acessorio nao tem genero: esconde masculino/feminino nessa visao
-    const esconder =
-      acessorio && (genero === "masculino" || genero === "feminino");
-
-    botao.style.display = esconder ? "none" : "";
     botao.classList.toggle("ativo", genero === normalizar(generoAtual));
   });
 }

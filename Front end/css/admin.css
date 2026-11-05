@@ -85,7 +85,7 @@ body {
 	padding: 12px 14px;
 	border: none;
 	background: transparent;
-	border-radius: 9px;
+	border-radius: 0;
 	font-size: 15px;
 	font-weight: 600;
 	color: var(--adm-texto);
@@ -323,7 +323,7 @@ body {
 .btn-primario,
 .btn-secundario {
 	padding: 12px 24px;
-	border-radius: 8px;
+	border-radius: 0;
 	font-size: 14px;
 	font-weight: 700;
 	cursor: pointer;
@@ -409,7 +409,7 @@ body {
 .btn-tabela {
 	border: 1px solid var(--adm-borda);
 	background: #fff;
-	border-radius: 7px;
+	border-radius: 0;
 	padding: 7px 12px;
 	font-size: 13px;
 	font-weight: 600;
@@ -571,7 +571,7 @@ body {
 	background: var(--adm-preto);
 	color: #fff;
 	padding: 14px 20px;
-	border-radius: 10px;
+	border-radius: 0;
 	font-size: 14px;
 	font-weight: 600;
 	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);

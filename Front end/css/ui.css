@@ -1,0 +1,223 @@
+/* ---------------- Pop-ups e avisos do site ---------------- */
+
+.ui-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 6000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.55);
+  opacity: 0;
+  transition: opacity 0.16s ease;
+}
+
+.ui-overlay--visivel {
+  opacity: 1;
+}
+
+.ui-modal {
+  width: min(430px, 100%);
+  background: #fff;
+  border: 1px solid #111;
+  border-top: 6px solid #111;
+  border-radius: 0;
+  padding: 26px 26px 22px;
+  box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.16);
+  transform: translateY(10px) scale(0.98);
+  transition: transform 0.16s ease;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", Arial, sans-serif;
+  color: #111;
+}
+
+.ui-overlay--visivel .ui-modal {
+  transform: translateY(0) scale(1);
+}
+
+.ui-overlay[data-tipo="sucesso"] .ui-modal {
+  border-top-color: #188038;
+}
+
+.ui-overlay[data-tipo="erro"] .ui-modal {
+  border-top-color: #b00020;
+}
+
+.ui-overlay[data-tipo="aviso"] .ui-modal {
+  border-top-color: #d49b00;
+}
+
+.ui-modal__simbolo {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 14px;
+  background: #111;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.ui-overlay[data-tipo="sucesso"] .ui-modal__simbolo {
+  background: #188038;
+}
+
+.ui-overlay[data-tipo="erro"] .ui-modal__simbolo {
+  background: #b00020;
+}
+
+.ui-overlay[data-tipo="aviso"] .ui-modal__simbolo {
+  background: #d49b00;
+}
+
+.ui-modal__titulo {
+  margin: 0 0 8px;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+}
+
+.ui-modal__mensagem {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.55;
+  color: #444;
+  white-space: pre-line;
+}
+
+.ui-modal__acoes {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.ui-btn {
+  min-width: 110px;
+  padding: 11px 18px;
+  border-radius: 0;
+  border: 1px solid #111;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.ui-btn--primario {
+  background: #111;
+  color: #fff;
+}
+
+.ui-btn--primario:hover {
+  background: #ffc936;
+  color: #111;
+  border-color: #ffc936;
+}
+
+.ui-btn--perigo {
+  background: #b00020;
+  border-color: #b00020;
+}
+
+.ui-btn--perigo:hover {
+  background: #fff;
+  color: #b00020;
+  border-color: #b00020;
+}
+
+.ui-btn--secundario {
+  background: #fff;
+  color: #111;
+}
+
+.ui-btn--secundario:hover {
+  background: #f2ece2;
+}
+
+.ui-btn:focus-visible {
+  outline: 3px solid #ffc936;
+  outline-offset: 2px;
+}
+
+/* ---------------- Toast ---------------- */
+
+.ui-toast-container {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 6100;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: min(340px, calc(100vw - 32px));
+  pointer-events: none;
+}
+
+.ui-toast {
+  display: flex;
+  align-items: stretch;
+  background: #111;
+  color: #fff;
+  border-radius: 0;
+  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.18);
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.45;
+  cursor: pointer;
+  pointer-events: auto;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.22s ease, transform 0.22s ease;
+}
+
+.ui-toast--visivel {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.ui-toast__barra {
+  width: 6px;
+  flex: 0 0 6px;
+  background: #ffc936;
+}
+
+.ui-toast[data-tipo="sucesso"] .ui-toast__barra {
+  background: #188038;
+}
+
+.ui-toast[data-tipo="erro"] .ui-toast__barra {
+  background: #b00020;
+}
+
+.ui-toast[data-tipo="aviso"] .ui-toast__barra {
+  background: #d49b00;
+}
+
+.ui-toast__texto {
+  padding: 13px 16px;
+}
+
+@media (max-width: 520px) {
+  .ui-modal {
+    padding: 22px 18px 18px;
+    box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.16);
+  }
+
+  .ui-modal__acoes {
+    flex-direction: column-reverse;
+  }
+
+  .ui-btn {
+    width: 100%;
+  }
+
+  .ui-toast-container {
+    right: 12px;
+    bottom: 12px;
+  }
+}

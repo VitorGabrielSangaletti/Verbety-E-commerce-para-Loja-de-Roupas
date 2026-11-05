@@ -6,7 +6,7 @@ let tamanhoSelecionado = null;
 const parametros = new URLSearchParams(window.location.search);
 const idProduto = parametros.get("id");
 
-// descobre se tem alguem logado e qual o tipo (USUARIO ou ADMIN)
+// descobre se tem alguem logado e qual o tipo (usuario ou admin)
 async function situacaoLogin() {
     const resposta = await fetch(API + "/api/auth/me", { credentials: "include" });
     if (!resposta.ok) return { logado: false, tipo: null };
@@ -15,9 +15,12 @@ async function situacaoLogin() {
     return { logado: true, tipo: dados.tipo };
 }
 
-// admin/funcionario nao compra e avisa em vez de jogar pro login
+// admin nao compra e envia um alerta
 function avisarApenasCliente() {
-    alert("Apenas clientes podem comprar. Saia e entre como cliente para adicionar ao carrinho.");
+    UI.alerta(
+        "Apenas clientes podem comprar. Saia e entre como cliente para adicionar ao carrinho.",
+        { tipo: "aviso" }
+    );
 }
 
 //adiciona no carrinho, retorna o item adicionado ou retorna vazio se der erro
@@ -41,7 +44,7 @@ async function adicionarProduto(produto) {
     const dados = await resposta.json();
 
     if (!resposta.ok) {
-        alert(dados.erro || "Não foi possível adicionar. Verifique o estoque.");
+        UI.alerta(dados.erro || "Não foi possível adicionar. Verifique o estoque.", { tipo: "erro" });
         return null;
     }
 
@@ -112,7 +115,7 @@ async function carregarProduto() {
         // "Adicionar ao Carrinho" adiciona e continua na pagina
         document.getElementById("btnCarrinho").addEventListener("click", async () => {
             if (!tamanhoSelecionado) {
-                alert("Escolha um tamanho");
+                UI.alerta("Escolha um tamanho", { tipo: "aviso" });
                 return;
             }
 
@@ -129,13 +132,13 @@ async function carregarProduto() {
             }
 
             const resultado = await adicionarProduto(produto);
-            if (resultado) alert("Adicionado ao carrinho!");
+            if (resultado) UI.toast("Adicionado ao carrinho!", "sucesso");
         });
 
-        // "Comprar agora" adiciona e abre o checkout direto,
+        // "Comprar agora" adiciona e abre o checkout direto
         document.getElementById("btnComprar").addEventListener("click", async () => {
             if (!tamanhoSelecionado) {
-                alert("Escolha um tamanho");
+                UI.alerta("Escolha um tamanho", { tipo: "aviso" });
                 return;
             }
 

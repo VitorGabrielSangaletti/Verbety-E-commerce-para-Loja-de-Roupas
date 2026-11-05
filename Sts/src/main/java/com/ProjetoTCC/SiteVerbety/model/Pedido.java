@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -39,6 +40,9 @@ public class Pedido {
 
     @Column(name = "observacao", columnDefinition = "TEXT")
     private String observacao;
+
+    @Column(name = "data_retirada")
+    private LocalDate dataRetirada;
 
     // Getters e Setters
     public Long getIdPedido() {
@@ -95,5 +99,13 @@ public class Pedido {
 
     public void setObservacao(String observacao) {
         this.observacao = observacao;
+    }
+
+    public LocalDate getDataRetirada() {
+        return dataRetirada;
+    }
+
+    public void setDataRetirada(LocalDate dataRetirada) {
+        this.dataRetirada = dataRetirada;
     }
 }

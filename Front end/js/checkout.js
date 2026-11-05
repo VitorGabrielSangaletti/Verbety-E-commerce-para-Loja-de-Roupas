@@ -4,6 +4,59 @@ function formatarPreco(valor) {
     return "R$ " + Number(valor).toFixed(2).replace(".", ",");
 }
 
+const FUSO_LOJA = "America/Sao_Paulo";
+const ABERTURA_MINUTOS = 8 * 60;          // 08:00
+const FECHAMENTO_MINUTOS = 17 * 60 + 30;  // 17:30
+
+// data de hoje no horario de Brasilia, no formato aceito pelo input date
+function dataHojeLoja() {
+    return new Intl.DateTimeFormat("en-CA", {
+        timeZone: FUSO_LOJA,
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit"
+    }).format(new Date());
+}
+
+function lojaAbertaAgora() {
+    const partes = new Intl.DateTimeFormat("en-US", {
+        timeZone: FUSO_LOJA,
+        hour: "2-digit",
+        minute: "2-digit",
+        hourCycle: "h23"
+    }).formatToParts(new Date());
+
+    const valor = (tipo) => Number((partes.find(p => p.type === tipo) || {}).value || 0);
+    const minutos = valor("hour") * 60 + valor("minute");
+    return minutos >= ABERTURA_MINUTOS && minutos < FECHAMENTO_MINUTOS;
+}
+
+function atualizarStatusLoja() {
+    const status = document.getElementById("lojaStatus");
+    const texto = document.getElementById("lojaStatusTexto");
+    if (!status || !texto) return;
+
+    const aberta = lojaAbertaAgora();
+    status.classList.toggle("aberta", aberta);
+    status.classList.toggle("fechada", !aberta);
+    texto.textContent = aberta ? "Loja aberta agora" : "Loja fechada agora";
+}
+
+let intervaloLoja = null;
+
+function iniciarStatusLoja() {
+    atualizarStatusLoja();
+    clearInterval(intervaloLoja);
+    intervaloLoja = setInterval(atualizarStatusLoja, 60000);
+}
+
+function formatarData(dataIso) {
+    if (!dataIso) return "—";
+    const [ano, mes, dia] = String(dataIso).slice(0, 10).split("-");
+    if (!ano || !mes || !dia) return dataIso;
+    return `${dia}/${mes}/${ano}`;
+}
+
 // carrega o carrinho do usuario logado
 async function carregarCheckout() {
     const conteudo = document.getElementById("conteudoCheckout");
@@ -45,7 +98,7 @@ async function carregarCheckout() {
         );
     }
 
-    // total sempre dos itens que estao aparecendo no checkout
+    // total dos itens que estao aparecendo no checkout
     const valorTotal = itens.reduce((soma, item) => soma + Number(item.subtotal), 0);
 
     if (itens.length === 0) {
@@ -71,6 +124,8 @@ async function carregarCheckout() {
         </div>
     `).join("");
 
+    const dataMinima = dataHojeLoja();
+
     conteudo.innerHTML = `
         <div class="checkout-itens">${itensHtml}</div>
 
@@ -85,8 +140,25 @@ async function carregarCheckout() {
                 <option value="BOLETO">Boleto</option>
             </select>
 
-            <label for="observacao">Observação (opcional)</label>
-            <textarea id="observacao" rows="2" placeholder="Ex: vestido tamanho M, retirada na loja..."></textarea>
+            <div class="checkout-extra">
+                <div class="checkout-observacao">
+                    <label for="observacao">Observação (opcional)</label>
+                    <textarea id="observacao" rows="4" placeholder="Ex: embalagem para presente..."></textarea>
+                </div>
+
+                <aside class="checkout-retirada">
+                    <div class="loja-status" id="lojaStatus">
+                        <span class="loja-status__ponto" aria-hidden="true"></span>
+                        <span id="lojaStatusTexto">Verificando horário...</span>
+                    </div>
+
+                    <p class="loja-horario">Funcionamento: <strong>08:00 às 17:30</strong></p>
+
+                    <label for="dataRetirada">Data de retirada <span class="obrigatorio">*</span></label>
+                    <input type="date" id="dataRetirada" min="${dataMinima}" required>
+                    <small class="loja-dica">Escolha o dia em que vai retirar o pedido na loja.</small>
+                </aside>
+            </div>
 
             <div class="checkout-total">
                 <p>Total</p>
@@ -97,7 +169,9 @@ async function carregarCheckout() {
         </div>
     `;
 
-    // mudar a quantidade direto no checkout
+    iniciarStatusLoja();
+
+    // muda a quantidade direto no checkout
     document.querySelectorAll(".cart-qtd").forEach(input => {
         input.addEventListener("change", async () => {
             const idItem = input.closest(".cart-item").dataset.id;
@@ -113,7 +187,7 @@ async function carregarCheckout() {
                 body: JSON.stringify({ quantidade })
             });
             const dados = await resp.json();
-            if (!resp.ok) alert(dados.erro || "Erro ao atualizar quantidade");
+            if (!resp.ok) UI.alerta(dados.erro || "Erro ao atualizar quantidade", { tipo: "erro" });
             carregarCheckout();
         });
     });
@@ -139,7 +213,24 @@ async function confirmarPedido() {
 
     const formaPagamento = document.getElementById("formaPagamento").value;
     const observacao = document.getElementById("observacao").value.trim() || null;
-    // so os itens que estao aparecendo no checkout entram na compra
+
+    const campoData = document.getElementById("dataRetirada");
+    const dataRetirada = campoData.value;
+    const hoje = dataHojeLoja();
+
+    if (!dataRetirada) {
+        UI.alerta("Informe a data de retirada do pedido.", { tipo: "aviso" });
+        campoData.focus();
+        return;
+    }
+
+    if (dataRetirada < hoje) {
+        UI.alerta("A data de retirada não pode ser no passado.", { tipo: "aviso" });
+        campoData.focus();
+        return;
+    }
+
+    // validacao para que so os itens que estao aparecendo no checkout entram na compra
     const itens = Array.from(document.querySelectorAll(".cart-item")).map(el => Number(el.dataset.id));
 
     botao.disabled = true;
@@ -149,12 +240,12 @@ async function confirmarPedido() {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ formaPagamento, observacao, itens })
+        body: JSON.stringify({ formaPagamento, observacao, dataRetirada, itens })
     });
     const dados = await resposta.json();
 
     if (!resposta.ok) {
-        alert(dados.erro || "Não foi possível finalizar o pedido");
+        UI.alerta(dados.erro || "Não foi possível finalizar o pedido", { tipo: "erro" });
         botao.disabled = false;
         botao.textContent = "Confirmar pedido";
         carregarCheckout(); // atualiza estoque
@@ -190,6 +281,7 @@ function mostrarSucesso(pedido, formaPagamento) {
 
             <p class="sucesso-total">Total: <strong>${formatarPreco(pedido.valorTotal)}</strong></p>
             <p>Pagamento: ${pedido.formaPagamento || formaPagamento || "—"}</p>
+            <p>Retirada na loja: <strong>${formatarData(pedido.dataRetirada)}</strong></p>
 
             <div class="sucesso-acoes">
                 <a href="Home.html" class="btn-secundario">Voltar pra Home</a>

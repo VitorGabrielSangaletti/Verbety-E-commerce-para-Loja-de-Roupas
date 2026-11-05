@@ -1,20 +1,10 @@
-﻿// Adiciona ao carrinho direto dos cards de produto (Home, Catálogo e Destaques)
+﻿//Botao de adionar ao carrinho no canto dos produtos
 (() => {
   const API = "";
   const cache = {};
 
-  function mostrarToast(texto) {
-    let toast = document.querySelector(".toast-carrinho");
-    if (!toast) {
-      toast = document.createElement("div");
-      toast.className = "toast-carrinho";
-      document.body.appendChild(toast);
-    }
-    toast.textContent = texto;
-    void toast.offsetWidth; // reinicia a transicao
-    toast.classList.add("visivel");
-    clearTimeout(toast._timer);
-    toast._timer = setTimeout(() => toast.classList.remove("visivel"), 2600);
+  function mostrarToast(texto, tipo) {
+    UI.toast(texto, tipo || "info");
   }
 
   async function buscarProduto(id) {
@@ -37,7 +27,7 @@
     // usa o primeiro tamanho com estoque (acessorio usa UNICO)
     const tamanho = (produto.tamanhos || []).find((t) => t.quantidade > 0);
     if (!tamanho) {
-      mostrarToast("Produto esgotado.");
+      mostrarToast("Produto esgotado.", "aviso");
       return;
     }
 
@@ -47,7 +37,10 @@
       return;
     }
     if (situacao.tipo !== "USUARIO") {
-      alert("Apenas clientes podem comprar. Saia e entre como cliente para adicionar ao carrinho.");
+      UI.alerta(
+        "Apenas clientes podem comprar. Saia e entre como cliente para adicionar ao carrinho.",
+        { tipo: "aviso" }
+      );
       return;
     }
 
@@ -70,17 +63,17 @@
 
       const dados = await resposta.json().catch(() => ({}));
       if (!resposta.ok) {
-        mostrarToast(dados.erro || "Não foi possível adicionar ao carrinho.");
+        mostrarToast(dados.erro || "Não foi possível adicionar ao carrinho.", "erro");
         return;
       }
 
-      mostrarToast(produto.nome + " adicionado ao carrinho!");
+      mostrarToast(produto.nome + " adicionado ao carrinho!", "sucesso");
     } catch (erro) {
-      mostrarToast("Erro de conexão com o servidor.");
+      mostrarToast("Erro de conexão com o servidor.", "erro");
     }
   }
 
-  // captura antes do clique do card (que abre a pagina do produto)
+  //Adiciona o evento do click
   document.addEventListener(
     "click",
     async (evento) => {
@@ -97,7 +90,7 @@
       try {
         const produto = await buscarProduto(botao.dataset.addCarrinho);
         if (!produto) {
-          mostrarToast("Produto não encontrado.");
+          mostrarToast("Produto não encontrado.", "erro");
           return;
         }
         await adicionar(produto);
