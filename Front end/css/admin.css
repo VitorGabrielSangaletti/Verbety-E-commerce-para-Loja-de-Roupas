@@ -602,7 +602,12 @@ body {
 @media (max-width: 900px) {
 	.admin-wrap {
 		flex-direction: column;
+		align-items: stretch;
 		gap: 18px;
+	}
+
+	.admin-conteudo {
+		width: 100%;
 	}
 
 	.admin-sidebar {

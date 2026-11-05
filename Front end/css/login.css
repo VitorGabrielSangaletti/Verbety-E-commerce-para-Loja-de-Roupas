@@ -149,3 +149,27 @@ form input:focus {
   color: #000;
   font-weight: 700;
 }
+
+/* ----- Responsivo ----- */
+@media (max-width: 520px) {
+  body {
+    padding: 16px;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .login-container {
+    width: 100%;
+    max-width: none;
+    margin: 16px 0;
+    padding: 28px 18px;
+    align-self: center;
+  }
+
+  .login-container .logo {
+    display: block;
+    margin-left: 0;
+    text-align: center;
+    font-size: 38px;
+  }
+}

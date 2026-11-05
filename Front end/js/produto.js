@@ -25,6 +25,7 @@ function avisarApenasCliente() {
 
 //adiciona no carrinho, retorna o item adicionado ou retorna vazio se der erro
 async function adicionarProduto(produto) {
+    const qtd = Number(document.getElementById("inputQtd").value || 1);
     const resposta = await fetch(API + "/api/carrinho/itens", {
         method: "POST",
         credentials: "include",
@@ -32,7 +33,7 @@ async function adicionarProduto(produto) {
         body: JSON.stringify({
             idProduto: produto.idProduto,
             tamanho: tamanhoSelecionado,
-            quantidade: 1
+            quantidade: qtd
         })
     });
 
@@ -82,26 +83,80 @@ async function carregarProduto() {
             }).join("");
         }
 
+        const imagemFrente = produto.imagem;
+        const imagemTras = produto.imagem2 || produto.imagem;
+
         conteudo.innerHTML = `
-            <img class="imagem-produto" src="../images/${produto.imagem}" alt="${produto.nome}" onerror="this.src='../images/guest.png'">
-            <div class="info-produto">
-                <h2>${produto.nome}</h2>
-                <p class="preco">R$ ${preco}</p>
-                <p>${produto.descricao || "Sem descrição."}</p>
+            <div class="produto-detalhes">
+                <div class="produto-galeria">
+                    <div class="produto-miniaturas">
+                        <img class="miniatura ativa"
+                             src="../images/${imagemFrente}" data-src="${imagemFrente}"
+                             alt="Frente" onerror="this.src='../images/guest.png'">
+                        ${imagemTras && imagemTras !== imagemFrente
+                            ? `<img class="miniatura" src="../images/${imagemTras}" data-src="${imagemTras}"
+                                   alt="Trás" onerror="this.src='../images/guest.png'">`
+                            : ""
+                        }
+                    </div>
+                    <div class="produto-imagem-principal">
+                        <img id="imgPrincipal" src="../images/${imagemFrente}" alt="${produto.nome}"
+                             onerror="this.src='../images/guest.png'">
+                    </div>
+                </div>
 
-                <h4>Tamanhos:</h4>
-                <div class="tamanhos">${botoesTamanho || "<span>Nenhum tamanho cadastrado.</span>"}</div>
+                <div class="produto-info">
+                    <h1>${produto.nome}</h1>
+                    <p class="preco">R$ ${preco}</p>
+                    <p>${produto.descricao || "Sem descrição."}</p>
 
-                <div class="acoes-produto">
-                    <button id="btnCarrinho" class="btn-adicionar" ${esgotado ? "disabled" : ""}>
-                        ${esgotado ? "Esgotado" : "Adicionar ao Carrinho"}
-                    </button>
-                    <button id="btnComprar" class="btn-comprar" ${esgotado ? "disabled" : ""}>
-                        Comprar agora
-                    </button>
+                    <div class="produto-selecoes">
+                        <div class="selecao-tamanhos">
+                            <h4>Tamanho</h4>
+                            <div class="tamanhos">${botoesTamanho || "<span>Nenhum tamanho cadastrado.</span>"}</div>
+                        </div>
+
+                        <div class="selecao-quantidade">
+                            <h4>Quantidade</h4>
+                            <div class="quantidade-controle">
+                                <button type="button" id="btnQtdMenos" class="btn-qtd">-</button>
+                                <input type="number" id="inputQtd" value="1" min="1" readonly>
+                                <button type="button" id="btnQtdMais" class="btn-qtd">+</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="acoes-produto">
+                        <button id="btnCarrinho" class="btn-adicionar" ${esgotado ? "disabled" : ""}>
+                            ${esgotado ? "Esgotado" : "Adicionar ao Carrinho"}
+                        </button>
+                        <button id="btnComprar" class="btn-comprar" ${esgotado ? "disabled" : ""}>
+                            Comprar agora
+                        </button>
+                    </div>
                 </div>
             </div>
         `;
+
+        // troca a imagem principal ao clicar na miniatura
+        document.querySelectorAll(".miniatura").forEach(miniatura => {
+            miniatura.addEventListener("click", () => {
+                document.querySelectorAll(".miniatura").forEach(m => m.classList.remove("ativa"));
+                miniatura.classList.add("ativa");
+                document.getElementById("imgPrincipal").src = "../images/" + miniatura.dataset.src;
+            });
+        });
+
+        // controle de quantidade
+        const inputQtd = document.getElementById("inputQtd");
+        document.getElementById("btnQtdMenos").addEventListener("click", () => {
+            const atual = Number(inputQtd.value || 1);
+            if (atual > 1) inputQtd.value = atual - 1;
+        });
+        document.getElementById("btnQtdMais").addEventListener("click", () => {
+            const atual = Number(inputQtd.value || 1);
+            inputQtd.value = atual + 1;
+        });
 
         // marca o tamanho escolhido
         document.querySelectorAll(".btn-tamanho:not(.desabilitado)").forEach(botao => {

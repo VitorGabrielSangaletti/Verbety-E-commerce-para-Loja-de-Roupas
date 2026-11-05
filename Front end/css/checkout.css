@@ -169,6 +169,20 @@
   }
 }
 
+@media (max-width: 600px) {
+  .checkout-container {
+    padding: 28px 16px;
+  }
+
+  .checkout-resumo {
+    padding: 18px 16px;
+  }
+
+  .btn-confirmar {
+    width: 100%;
+  }
+}
+
 .checkout-total {
   display: flex;
   justify-content: space-between;

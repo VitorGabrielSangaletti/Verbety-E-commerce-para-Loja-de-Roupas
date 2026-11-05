@@ -82,3 +82,25 @@
   cursor: pointer;
   min-width: 210px;
 }
+
+/* ----- Responsivo ----- */
+@media (max-width: 600px) {
+  .podio {
+    gap: 16px;
+  }
+
+  .podio-item {
+    width: 100%;
+    padding: 14px;
+  }
+
+  .podio-item img {
+    height: auto;
+    aspect-ratio: 3 / 4;
+  }
+
+  .filtros-destaques select {
+    width: 100%;
+    min-width: 0;
+  }
+}
