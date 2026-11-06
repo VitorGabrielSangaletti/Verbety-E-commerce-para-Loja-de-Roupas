@@ -55,7 +55,7 @@ public class DashboardController {
                 : faturamento.divide(BigDecimal.valueOf(totalPedidos), 2, RoundingMode.HALF_UP);
 
         // Produtos com 5 ou menos unidades no total (somando todos os tamanhos)
-        List<DashboardDTO.ItemEstoque> estoqueBaixo = produtoRepository.findAll().stream()
+        List<DashboardDTO.ItemEstoque> estoqueBaixo = produtoRepository.listarAtivos().stream()
                 .map(p -> new DashboardDTO.ItemEstoque(p.getNome(), estoqueTotal(p), p.getImagem()))
                 .filter(item -> item.getEstoque() <= 5)
                 .sorted(Comparator.comparingInt(DashboardDTO.ItemEstoque::getEstoque))

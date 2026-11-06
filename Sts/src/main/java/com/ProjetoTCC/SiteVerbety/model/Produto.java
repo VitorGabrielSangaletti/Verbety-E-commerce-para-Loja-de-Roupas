@@ -68,6 +68,10 @@ public class Produto {
     @Column(name = "genero", length = 20)
     private String genero;
 
+    // Produto excluido some da loja, mas continua no historico de pedidos
+    @Column(name = "excluido")
+    private Boolean excluido = false;
+
     @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("produto")
     private List<ProdutoTamanho> tamanhos = new ArrayList<>();
@@ -158,6 +162,14 @@ public class Produto {
 
     public void setGenero(String genero) {
         this.genero = genero;
+    }
+
+    public Boolean getExcluido() {
+        return excluido;
+    }
+
+    public void setExcluido(Boolean excluido) {
+        this.excluido = excluido;
     }
 
     public List<ProdutoTamanho> getTamanhos() {

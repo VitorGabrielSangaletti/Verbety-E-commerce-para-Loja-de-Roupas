@@ -61,6 +61,10 @@ public class CarrinhoService {
         Produto produto = produtoRepository.findById(idProduto)
                 .orElseThrow(() -> new RuntimeException("Produto n\u00e3o encontrado"));
 
+        if (Boolean.TRUE.equals(produto.getExcluido())) {
+            throw new RuntimeException("Produto n\u00e3o encontrado");
+        }
+
         ProdutoTamanho prodTamanho = produto.getTamanhos().stream()
                 .filter(t -> t.getTamanho().equalsIgnoreCase(tamanho))
                 .findFirst()
@@ -160,6 +164,11 @@ public class CarrinhoService {
 
         // confere o estoque antes de debitar
         for (ItemPedido item : itens) {
+            if (Boolean.TRUE.equals(item.getProduto().getExcluido())) {
+                throw new RuntimeException("Produto " + item.getProduto().getNome()
+                        + " n\u00e3o est\u00e1 mais dispon\u00edvel");
+            }
+
             ProdutoTamanho prodTamanho = item.getProduto().getTamanhos().stream()
                     .filter(t -> t.getTamanho().equalsIgnoreCase(item.getTamanho()))
                     .findFirst()

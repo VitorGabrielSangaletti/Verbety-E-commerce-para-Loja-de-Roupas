@@ -21,7 +21,7 @@ public class ProdutoService {
 	private ItemPedidoRepository itemPedidoRepository;
 
 	public List<Produto> listarTodos() {
-		return produtoRepository.findAll();
+		return produtoRepository.listarAtivos();
 	}
 
 	public Optional<Produto> buscarPorId(Long id) {
@@ -37,7 +37,15 @@ public class ProdutoService {
 	}
 
 	public void deletar(Long id) {
-		produtoRepository.deleteById(id);
+		produtoRepository.findById(id).ifPresent(produto -> {
+			if (itemPedidoRepository.existsByProdutoIdProduto(id)) {
+				// Ja foi vendido: some da loja, mas o historico de pedidos continua
+				produto.setExcluido(true);
+				produtoRepository.save(produto);
+			} else {
+				produtoRepository.delete(produto);
+			}
+		});
 	}
 
 	public List<Produto> buscarPorCategoria(Long idCategoria) {
