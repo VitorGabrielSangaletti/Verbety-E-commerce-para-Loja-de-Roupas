@@ -22,32 +22,12 @@ public class CategoriaController {
 		return categoriaService.listarTodos();
 	}
 	
-	//Busca por id
-	@GetMapping("/{id}")
-    public ResponseEntity<Categoria> buscarPorId(@PathVariable Long id) {
-        return categoriaService.buscarPorId(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-	
 	//Cria novas categorias
 	
 	@PostMapping
 	public Categoria criar(@RequestBody Categoria categoria) {
 		return categoriaService.salvar(categoria);
 	}
-	
-	//Atualiza as categorias
-	
-	@PutMapping("/{id}")
-    public ResponseEntity<Categoria> atualizar(@PathVariable Long id, @RequestBody Categoria categoria) {
-        return categoriaService.buscarPorId(id)
-                .map(existente -> {
-                    categoria.setIdCategoria(id);
-                    return ResponseEntity.ok(categoriaService.salvar(categoria));
-                })
-                .orElse(ResponseEntity.notFound().build());
-    }
 	
 	//Apaga uma categoria
 	

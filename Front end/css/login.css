@@ -15,16 +15,6 @@ body {
   background-size: cover;
 }
 
-.header {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: transparent;
-  padding: 24px 0;
-  min-height: 0;
-}
-
 .logo {
  font-family: "Great Vibes", cursive;
  align-self: center;

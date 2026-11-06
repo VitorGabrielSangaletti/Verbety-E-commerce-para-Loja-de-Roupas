@@ -7,13 +7,6 @@
   padding: 40px 20px;
 }
 
-.mensagem {
-  text-align: center;
-  font-size: 14px;
-  margin-bottom: 12px;
-  min-height: 18px;
-}
-
 .btn-voltar {
   display: inline-block;
   align-self: flex-start;

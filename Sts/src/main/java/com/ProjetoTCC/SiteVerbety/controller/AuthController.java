@@ -119,20 +119,6 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
-    // Cadastro do primeiro funcionario 
-    @PostMapping("/cadastro-funcionario")
-    public ResponseEntity<?> cadastroFuncionario(@RequestBody Funcionario funcionario) {
-        if (funcionarioService.emailExiste(funcionario.getEmail())) {
-            Map<String, String> response = new HashMap<>();
-            response.put("erro", "Email já cadastrado");
-            return ResponseEntity.badRequest().body(response);
-        }
-        funcionarioService.salvar(funcionario);
-        Map<String, String> response = new HashMap<>();
-        response.put("mensagem", "Funcionário cadastrado com sucesso!");
-        return ResponseEntity.ok(response);
-    }
-
     // Verifica quem ta logado
     @GetMapping("/me")
     public ResponseEntity<?> me(HttpSession session) {

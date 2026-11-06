@@ -34,13 +34,10 @@ public class SecurityConfig {
 						// Parte publica: so leitura (GET) de produtos e categorias
 						.requestMatchers(HttpMethod.GET, "/api/categorias", "/api/categorias/**").permitAll()
 						.requestMatchers(HttpMethod.GET, "/api/produtos", "/api/produtos/**").permitAll()
-						// Cadastro de funcionario so pode ser feito por um admin ja logado.
-						.requestMatchers("/api/auth/cadastro-funcionario").hasRole("ADMIN")
 						.requestMatchers("/api/auth/**").permitAll()
 
 						// Parte que o usuario tem que logar
-						.requestMatchers("/api/pedidos/**").authenticated().requestMatchers("/api/itens-pedido/**")
-						.authenticated().requestMatchers("/api/carrinho/**").authenticated()
+						.requestMatchers("/api/carrinho/**").authenticated()
 
 						// Parte que so funcionario pode mexer (admin)
 						.requestMatchers(HttpMethod.POST, "/api/categorias/**").hasRole("ADMIN")
@@ -49,8 +46,7 @@ public class SecurityConfig {
 						.requestMatchers(HttpMethod.POST, "/api/produtos/**").hasRole("ADMIN")
 						.requestMatchers(HttpMethod.PUT, "/api/produtos/**").hasRole("ADMIN")
 						.requestMatchers(HttpMethod.DELETE, "/api/produtos/**").hasRole("ADMIN")
-						.requestMatchers("/api/usuarios/**").hasRole("ADMIN").requestMatchers("/api/funcionarios/**")
-						.hasRole("ADMIN").requestMatchers("/api/admin/**").hasRole("ADMIN")
+						.requestMatchers("/api/admin/**").hasRole("ADMIN")
 
 						.anyRequest().permitAll())
 

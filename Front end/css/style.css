@@ -62,14 +62,6 @@ nav ul li {
   color: #ffc936;
 }
 
-.bi-heart {
-  transition: color 0.3s;
-}
-
-.bi-heart:hover {
-  color: rgb(248, 67, 67);
-}
-
 .icones {
   display: flex;
   justify-content: flex-end;
@@ -221,11 +213,6 @@ nav ul li {
   cursor: pointer;
 }
 
-.bi-heart {
-  top: 15px;
-  right: 15px;
-}
-
 .bi-bag {
   bottom: 15px;
   right: 15px;
@@ -267,27 +254,6 @@ nav ul li {
 .imagem-produto .btn-sacola i {
   position: static;
   font-size: 18px;
-}
-
-.toast-carrinho {
-  position: fixed;
-  left: 50%;
-  bottom: 28px;
-  transform: translateX(-50%) translateY(16px);
-  background: #111;
-  color: #fff;
-  padding: 12px 22px;
-  border-radius: 4px;
-  font-size: 14px;
-  z-index: 3000;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s, transform 0.3s;
-}
-
-.toast-carrinho.visivel {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
 }
 
 .nome {
@@ -348,19 +314,6 @@ nav ul li {
 
 /*------------------Botaos de criar e entra na conta------------------*/
 
-.header {
-  position: relative;
-}
-
-.auth-buttons {
-  position: absolute;
-  right: 85px;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  gap: 10px;
-}
-
 .btn-auth {
   display: inline-block;
   padding: 8px 22px;
@@ -371,29 +324,19 @@ nav ul li {
   transition: all 0.2s ease;
 }
 
-.btn-auth.btn-black,
-.btn-auth.btn-outline {
+.btn-auth.btn-black {
   background: #fff;
   color: #000;
   border: 1px solid #000;
 }
 
-.btn-auth.btn-black:hover,
-.btn-auth.btn-outline:hover {
+.btn-auth.btn-black:hover {
   background: #000;
   color: #fff;
 }
 
 body {
   overflow: auto;
-}
-
-.cart-icon {
-  border-left: 3px solid #f5f5f5;
-  padding: 3px;
-  bottom: 12px;
-  display: block;
-  box-sizing: border-box;
 }
 
 /*--------------------------container---------------------------------------*/
@@ -636,36 +579,6 @@ main {
     Arial, sans-serif;
 }
 
-.footer__news {
-  display: flex;
-  max-width: 340px;
-  background: var(--bg-soft);
-  border-radius: var(--radius);
-  padding: 4px;
-}
-
-.footer__news input::placeholder {
-  color: var(--muted);
-}
-.footer__news input:focus {
-  outline: none;
-}
-.footer__news:focus-within {
-  box-shadow: 0 0 0 2px var(--accent);
-}
-
-.footer__news button {
-  background: var(--accent);
-  color: var(--bg);
-  border: 0;
-  border-radius: 0;
-  padding: 0 16px;
-  font: inherit;
-  font-size: 14px;
-  font-weight: 700;
-  cursor: pointer;
-}
-
 /* Colunas */
 .footer__col h3 {
   font-size: 15px;
@@ -764,10 +677,6 @@ main {
   }
 }
 
-.linha {
-  color: #000;
-}
-
 .footer {
   background: var(--bg);
   color: #00000059;
@@ -824,12 +733,6 @@ main {
   font-size: 16px;
   line-height: 1.5;
   color: #ffffff;
-}
-
-.espaco {
-  height: 800px;
-  padding-top: 100px;
-  text-align: center;
 }
 
 /*------------------------------------------------------------Responsivo pra celular----------------------------------------------------------*/

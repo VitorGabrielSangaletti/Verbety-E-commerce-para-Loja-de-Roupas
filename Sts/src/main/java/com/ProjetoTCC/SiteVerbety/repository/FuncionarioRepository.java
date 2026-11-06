@@ -11,7 +11,4 @@ public interface FuncionarioRepository extends JpaRepository<Funcionario, Long> 
 
     // Busca o email
     Optional<Funcionario> findByEmail(String email);
-
-    // Verifica se o email ja existe
-    boolean existsByEmail(String email);
 }
