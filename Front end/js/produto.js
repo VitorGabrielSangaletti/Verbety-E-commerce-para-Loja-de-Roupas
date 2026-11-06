@@ -108,7 +108,6 @@ async function carregarProduto() {
                 <div class="produto-info">
                     <h1>${produto.nome}</h1>
                     <p class="preco">R$ ${preco}</p>
-                    <p>${produto.descricao || "Sem descrição."}</p>
 
                     <div class="produto-selecoes">
                         <div class="selecao-tamanhos">
@@ -133,6 +132,11 @@ async function carregarProduto() {
                         <button id="btnComprar" class="btn-comprar" ${esgotado ? "disabled" : ""}>
                             Comprar agora
                         </button>
+                    </div>
+
+                    <div class="produto-descricao">
+                        <h2>Descrição</h2>
+                        <p>${produto.descricao || "Sem descrição."}</p>
                     </div>
                 </div>
             </div>
